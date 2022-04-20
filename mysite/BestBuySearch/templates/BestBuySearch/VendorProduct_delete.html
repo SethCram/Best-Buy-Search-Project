@@ -1,0 +1,19 @@
+<!-- templates/BestBuySearch/VendorProduct_delete.html -->
+<!DOCTYPE html>
+
+    <head>
+    
+    </head>
+    
+    <body>
+        <button onclick="history.back()">Go Back</button>
+        <h2>Delete {{ vendorproduct.name }}?</h2>
+        <form method="post">
+          {% csrf_token %}
+          <!-- Delete form doesn't exist? -->
+          {{ form.as_p }}
+          <button type="submit">Confirm</button>
+        </form>
+    </body>
+    
+</html>

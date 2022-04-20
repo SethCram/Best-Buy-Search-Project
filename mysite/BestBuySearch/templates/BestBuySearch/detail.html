@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<!--Second Interation: -->
+<form action="{% url 'BestBuySearch:vote' question.id %}" method="post"> 
+{%csrf_token %}
+<fieldset>
+	<legend><h1>
+		{{ question.question_text }}
+	</h1></legend> <!-- legend = ? -->
+	
+	{% if error_meggase %}
+		<p><strong>{{ error_message }}</strong></p>  <!-- strong = ? -->
+	{% endif %}
+	
+	{% for choice in question.choice_set.all %}
+	<!-- radio input is bulleted, sel'able points -->
+		<input type="radio" name="choice" 
+			id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+		<label for="choice{{ forloop.counter }}">
+			{{ choice.choice_text }}</label><br> <!-- br = ? -->
+	{% endfor %}
+</fieldset>
+
+<input type="submit" value="Vote">
+
+</form>	
+		
+
+</html>

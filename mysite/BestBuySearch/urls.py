@@ -1,0 +1,37 @@
+from django.shortcuts import render
+
+from django.urls import path
+
+from . import views
+
+# Create your urls here.
+
+app_name = 'BestBuySearch'
+
+urlpatterns = [
+         #ex: /BestBuySearch/
+         #path('', views.IndexView.as_view(), name='index'),
+         #path('products/', views.ProductView.as_view(), name = "products"),
+         
+         #homepage:
+         path('products/', views.ProductView.as_view(), name = "products"),
+         #signups:
+         path("customer_signup/", views.CustomerSignUpView.as_view(), name = "customer_signup"),
+         path("vendor_signup/", views.VendorSignUpView.as_view(), name = "vendor_signup"),
+         #search results:
+         path('products/similar_search/', views.SimilarResultsView.as_view(), name = "similar_results"),
+         path('products/exact_search/', views.ExactResultsView.as_view(), name = "exact_results"),
+         #product editing:
+         path('products/add_product/', views.ProductCreateView.as_view(), name = 'add_product'),
+         path('products/all_products/', views.AllProductsView.as_view(), name = 'all_products'),
+         path('products/all_products/<int:pk>/', views.ProductUpdateView.as_view(), name = 'update_product'),
+         path('products/all_products/<int:pk>/delete/', views.ProductDeleteView.as_view(), name = 'delete_product'),
+         
+         #polls:
+         #ex: /BestBuySearch/5/
+         #path('<int:pk>/', views.DetailView.as_view(), name='detail'),
+         #ex: /BestBuySearch/5/results/
+         #path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
+         #ex: /BestBuySearch/5/vote/
+         #path('<int:question_id>/vote/', views.vote, name='vote')
+       ]

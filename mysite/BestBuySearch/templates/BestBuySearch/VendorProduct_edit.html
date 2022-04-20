@@ -1,0 +1,18 @@
+<!-- templates/BestBuySearch/VendorProduct_edit.html -->
+<!DOCTYPE html>
+
+    <head>
+    
+    </head>
+    
+    <body>
+        <button onclick="history.back()">Go Back</button>
+        <h2>Edit {{ vendorproduct.name }}</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Confirm Change</button>
+        </form>
+    </body>
+    
+</html>

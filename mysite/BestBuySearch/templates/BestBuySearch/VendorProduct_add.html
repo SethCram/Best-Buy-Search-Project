@@ -1,0 +1,18 @@
+<!-- templates/BestBuySearch/VendorProduct_form.html -->
+<!DOCTYPE html>
+
+    <head>
+    
+    </head>
+    
+    <body>
+        <button onclick="history.back()">Go Back</button>
+        <h2>Register Item</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Add Item</button>
+        </form>
+    </body>
+    
+</html>

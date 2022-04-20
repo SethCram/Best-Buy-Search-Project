@@ -1,0 +1,15 @@
+<!-- templates/registration/customer_signup.html -->
+
+<button onclick="history.back()">Go Back</button>
+
+{% block content %}
+  <h2>Customer Sign Up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign Up</button>
+  </form>
+{% endblock %}
+
+
+

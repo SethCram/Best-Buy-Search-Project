@@ -44,7 +44,6 @@ class VendorSignUpForm(UserCreationForm):
         user = super().save(commit = False)
         user.is_vendor = True
         user.save()
-        #make sure brand data saved by adding entry:
-        vendor = Vendor.objects.create(user = user)
-        vendor.brand = self.cleaned_data #.get('brand')
+        #make sure brand data saved by adding entry: 
+        vendor = Vendor.objects.create(user = user, brand = self.cleaned_data['brand'])
         return user

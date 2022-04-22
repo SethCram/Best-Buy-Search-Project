@@ -123,7 +123,7 @@ class ExactResultsView(generic.ListView):
         
             exactmatch_list = VendorProduct.objects.filter(
                 #filter by name and category being contained
-                Q(name = query) | Q(category = query)
+                Q(name__iexact = query) | Q(category__iexact = query)
             )
             return exactmatch_list
         

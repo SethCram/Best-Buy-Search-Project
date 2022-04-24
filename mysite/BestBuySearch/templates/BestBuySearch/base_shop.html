@@ -1,0 +1,89 @@
+{% extends 'BestBuySearch/base.html' %}
+
+<!DOCTYPE html>
+
+    <head>
+        <!-- extended head should be inserted here -->
+
+    </head>
+    <body>
+        
+        <!-- Navbar should be inserted here -->
+        {% block navbar.super %}
+
+        {% endblock %}
+        
+        <!-- Header-->
+        {% block header %}
+            <header class="bg-dark py-5">
+                <div class="container px-4 px-lg-5 my-5">
+                    <div class="text-center text-white">
+                        <h1 class="display-4 fw-bolder">Shop in style</h1>
+                        <p class="lead fw-normal text-white-50 mb-0"></p>
+                        
+                        <!-- Search bar should be inserted here. -->
+                        {% block search_bar %}
+
+                        {% endblock search_bar %}
+
+                    </div>
+                </div>
+                
+            </header>
+        {% endblock header %}
+
+        <!-- Section-->
+        {% block section %}
+            <section class="py-5">
+                <div class="container px-4 px-lg-5 mt-5">
+                    <div class="text-center">
+                        
+                        <!-- section title -->
+                        {% block section_title %}
+                            <h2> Most Recently Added </h2>
+                        {% endblock section_title %}
+                        
+                    </div>
+                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                        
+                        <!-- recent listings -->
+                        {% block listings %}
+                            {% if vendorproduct_list %}
+                                {% for vendorproduct in vendorproduct_list %}
+                                    <div class="col mb-5">
+                                        <div class="card h-100">
+                                            <!-- Product image-->
+                                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                            <!-- Product details-->
+                                            <div class="card-body p-4">
+                                                <div class="text-center">
+                                                    <!-- Product name-->
+                                                    <h5 class="fw-bolder">{{ vendorproduct.name }}</h5>
+                                                    <!-- Product price-->
+                                                    ${{ vendorproduct.cost }}
+                                                </div>
+                                            </div>
+                                            <!-- Product actions-->
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                                {% if user.is_customer %}
+                                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'BestBuySearch:add_to_cart' vendorproduct.PID %}">Add to cart</a></div>
+                                                {% endif %}
+                                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p>No products are available.</p>
+                            {% endif %}
+                        {% endblock listings %}
+
+                    </div>
+                </div>
+            </section>
+
+        {% endblock section %}
+		
+        <!-- footer should be inherited  -->>
+    </body>
+</html>

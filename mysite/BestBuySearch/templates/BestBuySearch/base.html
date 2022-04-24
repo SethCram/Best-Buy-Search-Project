@@ -5,15 +5,25 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Shop Homepage</title>
+        <meta name="description" content="Product matching service" />
+        <meta name="author" content="Seth Cram" />
+        
+        <title>
+        {% block title %}
+            BestBuySearch Shop
+        {% endblock title %}
+        </title>
+
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="{% static 'BestBuySearch/eCommerce/assets/favicon.ico' %}" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'BestBuySearch/eCommerce/css/styles.css' %}" rel="stylesheet" />
+
+        {% block more_styling %}
+        
+        {% endblock more_styling %}
 
     </head>
     <body>
@@ -69,31 +79,49 @@
             {% endblock navbar %}
         </nav>
         
-        <!-- header -->
-        {% block header %}
-            {% block search_bar %}
+        <!-- inner body -->
+        {% block inner-body %}
+            <!-- header -->
+            {% block header %}
+                {% block search_bar %}
 
-            {% endblock search_bar %}
-        {% endblock header %}
-
-        <!-- section -->
-        {% block section %}
-            {% block section_title %}
+                {% endblock search_bar %}
+                {% block options %}
                 
-            {% endblock section_title %}
+                {% endblock options %}
 
-            {% block listings %}
-            
-            {% endblock listings %}
-        {% endblock section %}
+            {% endblock header %}
+
+            <!-- section -->
+            {% block section %}
+                {% block section_title %}
+                    
+                {% endblock section_title %}
+
+                {% block listings %}
+                
+                {% endblock listings %}
+            {% endblock section %}
+
+        {% endblock inner-body %}
 		
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; BestBuySearch 2022</p></div>
+            <ul class="list-inline text-center">
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Support</a></li>
+            </ul>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="{% static 'BestBuySearch/eCommerce/js/scripts.js' %}"></script> 
+    
+        {% block more_footer %}
+        
+        {% endblock more_footer %}
+    
     </body>
 </html>

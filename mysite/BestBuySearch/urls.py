@@ -30,6 +30,7 @@ urlpatterns = [
          #cart urls:
          path('products/checkout/', views.Cart.as_view(), name = 'checkout'),
          path('products/<int:pk>/add_to_cart/', views.add_to_cart, name = 'add_to_cart'),
+         path('products/checkout/<int:pk>/rm_from_cart/', views.rm_from_cart, name = 'rm_from_cart'),
          
          #polls:
          #ex: /BestBuySearch/5/

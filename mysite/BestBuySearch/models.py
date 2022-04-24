@@ -36,7 +36,7 @@ class VendorProduct(models.Model):
     update_date = models.DateTimeField("date updated")
     pub_date = models.DateTimeField("date published")
 
-    #should include description field
+    #should include full description field + short description field
     
     created_by = models.ForeignKey(User, on_delete = models.CASCADE)
     

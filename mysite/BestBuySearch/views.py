@@ -26,12 +26,14 @@ from .decorators import customer_required, vendor_required
 
 # Create your views here.
 
-#cart views
-"""
+#cart related views
+
 @login_required
-def add_to_cart(request, prod_id):
+@customer_required
+def add_to_cart(request, pk):
+    
     #get product requested
-    vendorproduct = get_object_or_404(VendorProduct, PID = prod_id)
+    vendorproduct = get_object_or_404(VendorProduct, PID = pk)
     #get customer who initiated 
     customer = Customer.objects.get(user = request.user)
     #save product to customer's products
@@ -40,9 +42,32 @@ def add_to_cart(request, prod_id):
 
     #succeed message + redir to cart
     messages.success(request, "Cart updated!")
+    
     #send to checkout
-    return redirect('checkout')
-"""
+    #return redirect('BestBuySearch:checkout')
+
+    #redirect user to url user left
+    #return HttpResponseRedirect(request.path_info)
+
+    #return user to prev url (works better for me)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+@customer_required
+def rm_from_cart(request, pk):
+    
+    #get product requested
+    vendorproduct = get_object_or_404(VendorProduct, PID = pk)
+    #get customer who initiated 
+    customer = Customer.objects.get(user = request.user)
+    #save product to customer's products
+    customer.products.remove(vendorproduct)
+    customer.save()
+
+    #succeed message + redir to cart
+    messages.success(request, "Cart updated!")
+    #send to checkout
+    return redirect('BestBuySearch:checkout')
 
 @method_decorator([login_required, customer_required], name = 'dispatch')
 class Cart( generic.ListView ):
@@ -56,7 +81,7 @@ class Cart( generic.ListView ):
         #find customer w/ user id
         customer = Customer.objects.get(pk = self.request.user.id)
         #retrieve that customer's products added to their cart
-        checkoutproducts_list = customer.products
+        checkoutproducts_list = customer.products.all() #need to call all(), or else not list of iteratable objs
         return checkoutproducts_list
 
 
@@ -132,40 +157,6 @@ class ProductView(generic.ListView):
     def get_queryset(self):
         """Return four most recently updated products."""
         return VendorProduct.objects.order_by('-update_date')[:4]
-
-    @login_required
-    def add_to_cart(request, prod_id):
-        #get product requested
-        vendorproduct = get_object_or_404(VendorProduct, PID = prod_id)
-        #get customer who initiated 
-        customer = Customer.objects.get(user = request.user)
-        #save product to customer's products
-        customer.products.add(vendorproduct)
-        customer.save()
-
-        #succeed message + redir to cart
-        messages.success(request, "Cart updated!")
-        #send to checkout
-        return redirect('checkout')
-
-#@[login_required, customer_required]
-@login_required
-@customer_required
-def add_to_cart(request, pk):
-    
-    #get product requested
-    vendorproduct = get_object_or_404(VendorProduct, PID = pk)
-    #get customer who initiated 
-    customer = Customer.objects.get(user = request.user)
-    #save product to customer's products
-    customer.products.add(vendorproduct)
-    customer.save()
-
-    #succeed message + redir to cart
-    messages.success(request, "Cart updated!")
-    #send to checkout
-    return redirect('BestBuySearch:checkout')
-
 
 class ExactResultsView(generic.ListView):
     """Exact search results view."""

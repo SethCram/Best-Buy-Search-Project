@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 from django.db import transaction
 
-from .models import Vendor, User
+from .models import Vendor, User, Customer
 #from django.contrib.auth.models import User
 
 class CustomerSignUpForm(UserCreationForm):
@@ -26,6 +26,7 @@ class CustomerSignUpForm(UserCreationForm):
         if (commit):
             user.save()
         #fills many to many field: customer = Customer.objects.create(user = user)
+        customer = Customer.objects.create(user = user)
         return user
     
 class VendorSignUpForm(UserCreationForm):

@@ -21,11 +21,15 @@ urlpatterns = [
          #search results:
          path('products/similar_search/', views.SimilarResultsView.as_view(), name = "similar_results"),
          path('products/exact_search/', views.ExactResultsView.as_view(), name = "exact_results"),
+         path('products/requirement_search/', views.RequirementResultsView.as_view(), name = "requirement_results"),
          #product editing:
          path('products/add_product/', views.ProductCreateView.as_view(), name = 'add_product'),
          path('products/all_products/', views.AllProductsView.as_view(), name = 'all_products'),
-         path('products/all_products/<int:pk>/', views.ProductUpdateView.as_view(), name = 'update_product'),
+         path('products/all_products/<int:pk>/update/', views.ProductUpdateView.as_view(), name = 'update_product'),
          path('products/all_products/<int:pk>/delete/', views.ProductDeleteView.as_view(), name = 'delete_product'),
+         #cart urls:
+         path('products/checkout/', views.Cart.as_view(), name = 'checkout'),
+         path('products/<int:pk>/add_to_cart/', views.add_to_cart, name = 'add_to_cart'),
          
          #polls:
          #ex: /BestBuySearch/5/

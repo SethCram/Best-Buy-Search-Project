@@ -11,7 +11,7 @@ from django.urls import reverse
 
 # Create your models here.
 
-#User models
+#User model
 
 class User(AbstractUser):
     """
@@ -20,21 +20,6 @@ class User(AbstractUser):
     """
     is_vendor = models.BooleanField(default = False)
     is_customer = models.BooleanField(default = False)
-    
-class Customer(models.Model):
-    """
-    Create profile model via 1-to-1 relations to user model.
-    """
-    user = models.OneToOneField(User, on_delete = models.CASCADE, primary_key = True)
-    
-    
-    
-class Vendor(models.Model):
-    """
-    Create profile model via 1-to-1 relations to user model.
-    """
-    user = models.OneToOneField(User, on_delete = models.CASCADE, primary_key = True)
-    brand = models.CharField(max_length = 200)
 
 #product model
 
@@ -50,6 +35,8 @@ class VendorProduct(models.Model):
     #dates:
     update_date = models.DateTimeField("date updated")
     pub_date = models.DateTimeField("date published")
+
+    #should include description field
     
     created_by = models.ForeignKey(User, on_delete = models.CASCADE)
     
@@ -60,8 +47,23 @@ class VendorProduct(models.Model):
         """Used by CreateView and UpdateView as success_url."""
         #return reverse('add_product', kwargs = {'pk': self.pk})
         return reverse('BestBuySearch:products')
+    
+#User models
 
-
+class Customer(models.Model):
+    """
+    Create profile model via 1-to-1 relations to user model.
+    """
+    user = models.OneToOneField(User, on_delete = models.CASCADE, primary_key = True)
+    products = models.ManyToManyField(VendorProduct)
+    
+    
+class Vendor(models.Model):
+    """
+    Create profile model via 1-to-1 relations to user model.
+    """
+    user = models.OneToOneField(User, on_delete = models.CASCADE, primary_key = True)
+    brand = models.CharField(max_length = 200)
 
 """#polls models
 class Question(models.Model):

@@ -33,7 +33,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="{% url 'BestBuySearch:exact_results' %}">Exact Search</a></li>
                                 <li><a class="dropdown-item" href="{% url 'BestBuySearch:similar_results' %}">Similar Search</a></li>
-                                <li><a class="dropdown-item" href="{% url 'BestBuySearch:requirement_results' %}">Requirements Search</a></li>
+                                <li><a class="dropdown-item" href="#!">Requirements Search</a></li>
                             </ul>   
                         </li>                           
                                            
@@ -50,12 +50,12 @@
       						
       						    
       						{% else %}
-  						      <form class="d-flex">
-                                <a class="nav-link" type = "submit" href="{% url 'BestBuySearch:checkout' %}">
+  						      <form class="d-flex">          
+                                  <button class="btn btn-outline-dark" type="submit">
                                       <i class="bi-cart-fill me-1"></i>
-                                        Cart
-                                      <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
-                                </a>
+                                      Cart
+                                      <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                                  </button>
                               </form>
           					{% endif %}	
   						{% endif %}
@@ -73,6 +73,44 @@
                     <h1 class="display-4 fw-bolder">Shop in style</h1>
                     <p class="lead fw-normal text-white-50 mb-0"></p>
                     
+                    <!-- dropdown button -->
+                    <div class="dropdown">
+                        <button data-bs-toggle="dropdown" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
+                          Dropdown button
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#">Action</a>
+                          <a class="dropdown-item" href="#">Another action</a>
+                          <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                      
+                    <!-- Price Radio -->
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Default radio
+                    </label>
+                    </div>
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Default checked radio
+                    </label>
+                    </div>
+                    
+                    <!-- Price Radio Toggle Btns -->
+                    <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
+                    <label class="btn btn-secondary" for="option1">Checked</label>
+
+                    <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
+                    <label class="btn btn-secondary" for="option2">Radio</label>
+
+                    <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off" disabled>
+                    <label class="btn btn-secondary" for="option3">Disabled</label>
+
+                    <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off">
+                    <label class="btn btn-secondary" for="option4">Radio</label>
                 </div>
             </div>
         </header>
@@ -101,9 +139,7 @@
                                 </div>
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    {% if user.is_customer %}
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'BestBuySearch:add_to_cart' vendorproduct.PID %}">Add to cart</a></div>
-                                    {% endif %}
+                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
                                     <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
                                 </div>
                             </div>

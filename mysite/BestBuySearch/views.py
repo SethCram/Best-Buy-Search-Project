@@ -11,10 +11,11 @@ from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
+from django.contrib import messages
 
 from django.db.models import Q #for query objs
 
-from .models import VendorProduct, User#, Question, Choice
+from .models import VendorProduct, User, Customer, Vendor#, Question, Choice
 #from django.contrib.auth.models import User
 
 from .forms import CustomerSignUpForm, VendorSignUpForm
@@ -24,6 +25,40 @@ from django.contrib.auth.decorators import login_required
 from .decorators import customer_required, vendor_required
 
 # Create your views here.
+
+#cart views
+"""
+@login_required
+def add_to_cart(request, prod_id):
+    #get product requested
+    vendorproduct = get_object_or_404(VendorProduct, PID = prod_id)
+    #get customer who initiated 
+    customer = Customer.objects.get(user = request.user)
+    #save product to customer's products
+    customer.products.add(vendorproduct)
+    customer.save()
+
+    #succeed message + redir to cart
+    messages.success(request, "Cart updated!")
+    #send to checkout
+    return redirect('checkout')
+"""
+
+@method_decorator([login_required, customer_required], name = 'dispatch')
+class Cart( generic.ListView ):
+    template_name = "BestBuySearch/checkout.html" #have to specify app_name/template_name bc templates r namespaced using app_name
+    context_object_name = 'checkoutproducts_list'
+
+    def get_queryset(self):
+        """
+        Return all products in customer's cart.
+        """
+        #find customer w/ user id
+        customer = Customer.objects.get(pk = self.request.user.id)
+        #retrieve that customer's products added to their cart
+        checkoutproducts_list = customer.products
+        return checkoutproducts_list
+
 
 #signup views
     
@@ -98,6 +133,39 @@ class ProductView(generic.ListView):
         """Return four most recently updated products."""
         return VendorProduct.objects.order_by('-update_date')[:4]
 
+    @login_required
+    def add_to_cart(request, prod_id):
+        #get product requested
+        vendorproduct = get_object_or_404(VendorProduct, PID = prod_id)
+        #get customer who initiated 
+        customer = Customer.objects.get(user = request.user)
+        #save product to customer's products
+        customer.products.add(vendorproduct)
+        customer.save()
+
+        #succeed message + redir to cart
+        messages.success(request, "Cart updated!")
+        #send to checkout
+        return redirect('checkout')
+
+#@[login_required, customer_required]
+@login_required
+@customer_required
+def add_to_cart(request, pk):
+    
+    #get product requested
+    vendorproduct = get_object_or_404(VendorProduct, PID = pk)
+    #get customer who initiated 
+    customer = Customer.objects.get(user = request.user)
+    #save product to customer's products
+    customer.products.add(vendorproduct)
+    customer.save()
+
+    #succeed message + redir to cart
+    messages.success(request, "Cart updated!")
+    #send to checkout
+    return redirect('BestBuySearch:checkout')
+
 
 class ExactResultsView(generic.ListView):
     """Exact search results view."""
@@ -157,7 +225,38 @@ class SimilarResultsView(generic.ListView):
                 Q(name__icontains = query) | Q(category__icontains = query)
             )
             return similarmatch_list
-   
+
+class RequirementResultsView(generic.ListView):
+    """
+    Requirements search results view. Incomplete.
+    """
+    model = VendorProduct
+    template_name = "BestBuySearch/requirement_results.html" 
+    context_object_name = 'requirementmatch_list'
+    
+    def get_queryset(self):
+        """
+        Return VendorProduct filtered by substring search.
+        Empty query returns four most recently updated products.
+        """
+        
+        #get user input from template
+        query = self.request.GET.get("q") 
+        
+        #if no query:
+        if( query == None ):
+            #order by most recently updated items:
+            requirementmatch_list = VendorProduct.objects.order_by('-update_date')[:4]
+            return requirementmatch_list
+        else:
+        
+            requirementmatch_list = VendorProduct.objects.filter(
+                #filter by name or category being similar
+                Q(name__icontains = query) | Q(category__icontains = query)
+            )
+            return requirementmatch_list
+
+
 @method_decorator([login_required], name = 'dispatch') #why dispatch?
 class AllProductsView( generic.ListView ):
     #unneeded?: model = VendorProduct

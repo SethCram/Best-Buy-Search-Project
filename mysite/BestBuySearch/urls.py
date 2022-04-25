@@ -13,8 +13,9 @@ urlpatterns = [
          #path('', views.IndexView.as_view(), name='index'),
          #path('products/', views.ProductView.as_view(), name = "products"),
          
-         #homepage:
+         #basic homepage + details:
          path('products/', views.ProductView.as_view(), name = "products"),
+         path('products/<int:pk>/product_details/', views.ProductDetailsView.as_view(), name = "product_details"),
          #signups:
          path("customer_signup/", views.CustomerSignUpView.as_view(), name = "customer_signup"),
          path("vendor_signup/", views.VendorSignUpView.as_view(), name = "vendor_signup"),

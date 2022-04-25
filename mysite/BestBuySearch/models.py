@@ -37,7 +37,7 @@ class VendorProduct(models.Model):
     TV_HOME_THEATER = 1
     AUDIO = 2
     MUSICAL_INSTRUMENTS = 3
-    CAR_ELECTRNICS_GPS = 4
+    CAR_ELECTRONICS_GPS = 4
     CAMERAS_CAMCORDERS_DRONES = 5
     COMPUTERS_TABLETS = 6
     MOVIES_MUSIC = 7
@@ -58,7 +58,7 @@ class VendorProduct(models.Model):
         (TV_HOME_THEATER, "TV & Home Theater"),
         (AUDIO, "Audio"),
         (MUSICAL_INSTRUMENTS, "Musical Instruments" ),
-        (CAR_ELECTRNICS_GPS, "Care Electronics & GPS"),
+        (CAR_ELECTRONICS_GPS, "Car, Electronics & GPS"),
         (CAMERAS_CAMCORDERS_DRONES, "Cameras, Camcorders & Drone"),
         (COMPUTERS_TABLETS, "Computers & Tablets"),
         (MOVIES_MUSIC, "Movies & Music"),

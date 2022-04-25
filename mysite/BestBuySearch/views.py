@@ -158,6 +158,16 @@ class ProductView(generic.ListView):
         """Return four most recently updated products."""
         return VendorProduct.objects.order_by('-update_date')[:4]
 
+@method_decorator([login_required], name = 'dispatch') 
+class ProductDetailsView(generic.DetailView): #should be DetailView not ListView
+    """A specific product's detail view."""
+    #need to specify model for DetailView
+    model = VendorProduct
+    template_name = 'BestBuySearch/product_details.html'
+    #usable from html:
+    #can't have in details view?: context_object_name = 'recommendedproduct_list'
+     
+
 class ExactResultsView(generic.ListView):
     """Exact search results view."""
     model = VendorProduct

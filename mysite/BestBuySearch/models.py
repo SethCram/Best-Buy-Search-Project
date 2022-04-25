@@ -1,4 +1,6 @@
 import datetime
+from secrets import choice
+from unicodedata import category
 
 from django.db import models
 from django.utils import timezone
@@ -29,9 +31,73 @@ class VendorProduct(models.Model):
     PID = models.BigAutoField(primary_key = True)
     cost = models.DecimalField(default = 0, max_digits = 20, decimal_places = 2)
     name = models.CharField(max_length = 200)
-    category = models.CharField(max_length = 200)
-    prod_type = models.CharField(max_length = 50)
-    payment_type = models.CharField(max_length = 200)
+
+    #category
+    TV_HOME_THEATER = 1
+    AUDIO = 2
+    MUSICAL_INSTRUMENTS = 3
+    CAR_ELECTRNICS_GPS = 4
+    CAMERAS_CAMCORDERS_DRONES = 5
+    COMPUTERS_TABLETS = 6
+    MOVIES_MUSIC = 7
+    VIDEO_GAMES = 8
+    CELL_PHONES = 9
+    APPLIANCES = 10
+    GIFT_CARDS = 11
+    NAME_BRANDS = 12
+    BABY_CARE = 13
+    SERVICES = 14
+    HEALTH_WELLNESS = 15
+    TOYS_GAMES_COLLECTABLES = 16
+    SMART_HOME = 17
+    SPORTS_FITNESS_RECREATION = 18
+    HOME_FURNITURE_OFFICE = 19
+    WEARABLE_TECHNOLOGY = 20
+    CATEGORY = (
+        (TV_HOME_THEATER, "TV & Home Theater"),
+        (AUDIO, "Audio"),
+        (MUSICAL_INSTRUMENTS, "Musical Instruments" ),
+        (CAR_ELECTRNICS_GPS, "Care Electronics & GPS"),
+        (CAMERAS_CAMCORDERS_DRONES, "Cameras, Camcorders & Drone"),
+        (COMPUTERS_TABLETS, "Computers & Tablets"),
+        (MOVIES_MUSIC, "Movies & Music"),
+        (VIDEO_GAMES, "Video Games"),
+        (CELL_PHONES, "Cell Phones"),
+        (APPLIANCES, "Appliances"),
+        (GIFT_CARDS, "Gift Cards"),
+        (NAME_BRANDS, "Name Brands"),
+        (BABY_CARE, "Baby Care"),
+        (SERVICES, "Services"),
+        (HEALTH_WELLNESS, "Health & Wellness"),
+        (TOYS_GAMES_COLLECTABLES, "Toys, Games & Collectibles"),
+        (SMART_HOME, "Smart Home"),
+        (SPORTS_FITNESS_RECREATION, "Sports, Fitness & Recreation"),
+        (HOME_FURNITURE_OFFICE, "Home, Furniture & Office"),
+        (WEARABLE_TECHNOLOGY, "Wearable Technology"),
+    )
+    category = models.PositiveSmallIntegerField(choices=CATEGORY)
+
+    """#item type
+    PRODUCT = 1
+    SERVICE = 2
+    ITEM_TYPE = (
+        (PRODUCT, 'product'),
+        (SERVICE, 'service')
+    )
+    item_type = models.PositiveSmallIntegerField( choices=ITEM_TYPE, default=PRODUCT)
+    """
+    
+    #payment type
+    IN_FULL = 1
+    MONTHLY = 2
+    PAYMENT_TYPE = (
+        (IN_FULL, 'in full'),
+        (MONTHLY, 'monthly'),
+    )
+    payment_type = models.PositiveSmallIntegerField( choices=PAYMENT_TYPE, default=IN_FULL)
+
+    quantity = models.PositiveBigIntegerField(default=1)
+
     #dates:
     update_date = models.DateTimeField("date updated")
     pub_date = models.DateTimeField("date published")

@@ -43,9 +43,10 @@
                                         <h5 class="fw-bolder">{{ vendorproduct.name }}</h5>
                                         <!-- Product price-->
                                         ${{ vendorproduct.cost }}
-                                        <li>category: {{ vendorproduct.category }}</li>
-                                        <li>product type: {{ vendorproduct.prod_type }}</li>
-                                        <li>payment type: {{ vendorproduct.payment_type }}</li>
+                                        <li>category: {{ vendorproduct.get_category_display }}</li>
+                                        
+                                        <li>payment type: {{ vendorproduct.get_payment_type_display }}</li>
+                                        <li>quantity: {{ vendorproduct.quantity }}</li>
                                     </div>
                                 </div>
                                 <!-- Product actions-->

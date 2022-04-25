@@ -271,7 +271,7 @@ class AllProductsView( generic.ListView ):
 @method_decorator([login_required, vendor_required], name = 'dispatch') #why dispatch?
 class ProductCreateView( LoginRequiredMixin, generic.edit.CreateView ):
     model = VendorProduct
-    fields = ['name', 'cost', 'category', 'prod_type', 'payment_type']
+    fields = ['name', 'cost', 'category', 'payment_type', 'quantity']
     template_name = 'BestBuySearch/VendorProduct_add.html'
     
     def form_valid(self, form):
@@ -286,7 +286,7 @@ class ProductCreateView( LoginRequiredMixin, generic.edit.CreateView ):
 @method_decorator([login_required, vendor_required], name = 'dispatch') #why dispatch?
 class ProductUpdateView( generic.edit.UpdateView ):
     model = VendorProduct
-    fields = ['name', 'cost', 'category', 'prod_type', 'payment_type']
+    fields = ['name', 'cost', 'category', 'payment_type', 'quantity']
     template_name = 'BestBuySearch/VendorProduct_edit.html'
     success_url = reverse_lazy('BestBuySearch:all_products')
     

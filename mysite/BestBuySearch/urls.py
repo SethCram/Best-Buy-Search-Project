@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.shortcuts import render
 
 from django.urls import path
@@ -39,4 +41,4 @@ urlpatterns = [
          #path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
          #ex: /BestBuySearch/5/vote/
          #path('<int:question_id>/vote/', views.vote, name='vote')
-       ]
+       ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #needed to set media url and root?

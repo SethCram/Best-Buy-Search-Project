@@ -45,7 +45,7 @@
                   <li class="list-group-item d-flex justify-content-between lh-condensed">
                     <div>
                       <h6 class="my-0">{{ vendorproduct.name }}</h6>
-                      <small class="text-muted">Brief description</small>
+                      <small class="text-muted"> {{ vendorproduct.brief_description }} </small>
                     </div>
                     <span class="text-muted">${{ vendorproduct.cost }}</span>
                     <a class="btn btn-outline-dark mt-auto" href="{% url 'BestBuySearch:rm_from_cart' vendorproduct.PID %}" > Remove </a>

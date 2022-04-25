@@ -1,6 +1,7 @@
 import datetime
 from secrets import choice
 from unicodedata import category
+from unittest.util import _MAX_LENGTH
 
 from django.db import models
 from django.utils import timezone
@@ -97,6 +98,19 @@ class VendorProduct(models.Model):
     payment_type = models.PositiveSmallIntegerField( choices=PAYMENT_TYPE, default=IN_FULL)
 
     quantity = models.PositiveBigIntegerField(default=1)
+
+    #description fields:
+    product_description = models.CharField(max_length=200, default='product description...')
+    brief_description = models.CharField(max_length=20, default='brief description...')
+
+    #display images (auto uploads to media folder)
+    #WIDTH_REQ = 600
+    #HEIGHT_REQ = 700
+    #small_display_image = models.ImageField(upload_to='images/', width_field=450, height_field=300, max_length=100)
+    #big_display_image = models.ImageField(upload_to='images/', width_field=WIDTH_REQ, height_field=HEIGHT_REQ, max_length=100)
+    small_display_image = models.ImageField(upload_to='images/', max_length=500)
+    big_display_image = models.ImageField(upload_to='images/', max_length=500) 
+        #no idea how to restrict the upload resolution
 
     #dates:
     update_date = models.DateTimeField("date updated")

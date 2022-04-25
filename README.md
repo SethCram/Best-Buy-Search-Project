@@ -12,5 +12,5 @@
 - Frontend Languages = HTML, CSS, js
 
 **Setup:**
-- May need to delete 'prod_type' from vendorproducts table before migrate
+- May need to rename 'prod_type' from vendorproducts table to 'item_type' before migrate
 - 

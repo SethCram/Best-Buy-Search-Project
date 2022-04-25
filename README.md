@@ -5,8 +5,12 @@
 - Database Server = PHPMyAdmin run with XAMPP
 - IDEs = Spyder, Visual Studio
 - Version Control = Git
-- Packages = mysqlclient, python-decouple
+- Packages = mysqlclient, python-decouple, pillow
 - Backend = Django
 - Backend Languages = Python, MySQL 
 - Frontend = Bootstrap
-- Frotned Languages = HTML, CSS, js
+- Frontend Languages = HTML, CSS, js
+
+**Setup:**
+- May need to delete 'prod_type' from vendorproducts table before migrate
+- 

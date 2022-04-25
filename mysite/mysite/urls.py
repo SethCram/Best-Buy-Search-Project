@@ -27,4 +27,4 @@ urlpatterns = [
     #path('accounts/', include('BestBuySearch.urls')), #just incase
     path("BestBuySearch/", include("django.contrib.auth.urls"))
     #path("", TemplateView.as_view(template_name = "home.html"), name = "home")
-]#+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #needed to set media url and root?
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #needed to set media url and root for image retrieval

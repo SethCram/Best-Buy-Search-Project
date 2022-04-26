@@ -38,7 +38,7 @@
                                     {% if user.is_customer %}
                                         <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'BestBuySearch:add_to_cart' vendorproduct.PID %}">Add to cart</a></div>
                                     {% endif %}
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
+                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'BestBuySearch:product_details' vendorproduct.PID %}">View details</a></div>
                                 </div>
                             </div>
                         </div>

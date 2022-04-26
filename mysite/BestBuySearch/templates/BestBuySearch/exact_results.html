@@ -6,7 +6,7 @@
         <!-- inherited -->
 
         {% block title %}
-            Precise Search
+            Exact Search
         {% endblock title %}
 
 
@@ -18,14 +18,14 @@
         {% block search_bar %}
             <!-- search bar -->
             <form action="{% url 'BestBuySearch:exact_results' %}" method="get">
-            <input name="q" type="text" placeholder="Search...">
+            <input name="q" type="text" placeholder="Search name or category">
             </form>
         {% endblock search_bar %}
 
         
         <!-- Perfect match -->
         {% block section_title %}
-            <h2> Perfect Matches </h2>
+            <h2> Exact Matches </h2>
         {% endblock section_title %}
         
         <!-- listings -->

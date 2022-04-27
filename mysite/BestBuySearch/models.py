@@ -14,6 +14,21 @@ from django.urls import reverse
 
 # Create your models here.
 
+#query model
+
+"""
+class RequirementsQuerySet(models.QuerySet):
+    def search(self, **kwargs):
+        qs = self
+        if kwargs.get('q', ''):
+            qs = qs.filter(name__iexact=kwargs['q'])
+        if kwargs.get('government_type', []):
+            qs = qs.filter(government_type=kwargs['government_type'])
+        if kwargs.get('industry', []):
+            qs = qs.filter(industry=kwargs['industry'])
+        return qs
+"""
+
 #User model
 
 class User(AbstractUser):

@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 from django.db import transaction
 
-from .models import Vendor, User, Customer
+from .models import Vendor, User, Customer, VendorProduct
 #from django.contrib.auth.models import User
 
 class CustomerSignUpForm(UserCreationForm):
@@ -25,7 +25,7 @@ class CustomerSignUpForm(UserCreationForm):
         user.is_customer = True
         if (commit):
             user.save()
-        #fills many to many field: customer = Customer.objects.create(user = user)
+        #create new customer: 
         customer = Customer.objects.create(user = user)
         return user
     
@@ -48,3 +48,22 @@ class VendorSignUpForm(UserCreationForm):
         #make sure brand data saved by adding entry: 
         vendor = Vendor.objects.create(user = user, brand = self.cleaned_data['brand'])
         return user
+
+class ProductForm(forms.ModelForm):
+    
+    #override cost input to be options
+    ANY = 1
+    LT_50 = 2
+    LT_100 = 3
+    LT_500 = 5
+    COST_CHOICES = (
+        (ANY, "Any"),
+        (LT_50, "< $50"),
+        (LT_100, "< $100"),
+        (LT_500, "< $500"),
+    )
+    cost = forms.ChoiceField(choices = COST_CHOICES)
+
+    class Meta:
+        model = VendorProduct
+        fields = ['name', 'cost', 'category', 'payment_type']

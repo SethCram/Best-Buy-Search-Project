@@ -51,10 +51,26 @@
 
             <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off">
             <label class="btn btn-secondary" for="option4">Radio</label>
+            
         {% endblock options %}
 
 
         <!-- Section-->
+        {% block section %}
+        
+            <form method="post" action = "{% url 'BestBuySearch:MultipleSearch' %}" >
+                {% csrf_token %}
+                {{ form.as_table }}
+
+                <button type="submit">Search</button>
+            </form>
+            {% for result in VendorProduct %}
+            <tr>
+                <td> {{ result.name }} </td>
+            <tr/>
+            {% endfor %}
+
+        {% endblock section %}
         
             <!-- listings-->
 		

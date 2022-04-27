@@ -18,7 +18,7 @@ from django.db.models import Q #for query objs
 from .models import VendorProduct, User, Customer, Vendor#, Question, Choice
 #from django.contrib.auth.models import User
 
-from .forms import CustomerSignUpForm, VendorSignUpForm
+from .forms import CustomerSignUpForm, VendorSignUpForm, ProductForm
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -231,15 +231,26 @@ class RequirementResultsView(generic.ListView):
     """
     Requirements search results view. Incomplete.
     """
-    model = VendorProduct
+    model = VendorProduct    
     template_name = "BestBuySearch/requirement_results.html" 
     context_object_name = 'requirementmatch_list'
     
+    form_class = ProductForm
+
+    def get_context_data(self, **kwargs):
+        context = super(RequirementResultsView, self).get_context_data(**kwargs)
+        context['form'] = ProductForm()
+        return context
+
+    #fields = ['name', 'cost', 'category', 'payment_type', 'product_description', 'brief_description']
+    #form = SearchForm(request.GET)
+
+    """
     def get_queryset(self):
-        """
-        Return VendorProduct filtered by substring search.
-        Empty query returns four most recently updated products.
-        """
+"""
+#Return VendorProduct filtered by substring search.
+#Empty query returns four most recently updated products.
+"""
         
         #get user input from template
         query = self.request.GET.get("q") 
@@ -256,7 +267,25 @@ class RequirementResultsView(generic.ListView):
                 Q(name__icontains = query) | Q(category__icontains = query)
             )
             return requirementmatch_list
+    """
 
+def MultipleSearch(request): #name, cost, category, payment_type):
+    if request.method == "POST":
+        #should be passed in for us thru request
+        name = request.POST.get('name')
+        cost = request.POST.get('cost')
+        category = request.POST.get('category')
+        payment_type = request.POST.get('payment_type')
+        
+        #vendorproduct_obj = VendorProduct.objects.raw('select * from VendorProduct where name="'+name+'" and cost="'+cost+'" and category="'+category+'" and payment_type="'+payment_type+'"')
+        vendorproduct_obj = VendorProduct.objects.filter(name__iexact = name).filter(category=category).filter(payment_type=payment_type)
+
+        #context = {'name': name, 'cost': cost, 'category': category, 'payment_type': payment_type}
+    else:
+        vendorproduct_obj = VendorProduct.objects.all()
+
+    context = {"VendorProduct": vendorproduct_obj}
+    return render(request,'BestBuySearch/requirement_results.html', context) 
 
 @method_decorator([login_required], name = 'dispatch') #why dispatch?
 class AllProductsView( generic.ListView ):

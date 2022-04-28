@@ -95,16 +95,6 @@ class VendorProduct(models.Model):
         (WEARABLE_TECHNOLOGY, "Wearable Technology"),
     )
     category = models.PositiveSmallIntegerField(choices=CATEGORY)
-
-    """#item type
-    PRODUCT = 1
-    SERVICE = 2
-    ITEM_TYPE = (
-        (PRODUCT, 'product'),
-        (SERVICE, 'service')
-    )
-    item_type = models.PositiveSmallIntegerField( choices=ITEM_TYPE, default=PRODUCT)
-    """
     
     #payment type
     IN_FULL = 1

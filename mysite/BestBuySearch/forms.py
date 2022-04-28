@@ -49,8 +49,8 @@ class VendorSignUpForm(UserCreationForm):
         vendor = Vendor.objects.create(user = user, brand = self.cleaned_data['brand'])
         return user
 
-class ProductForm(forms.ModelForm):
-    
+class RequirementForm(forms.Form): #forms.ModelForm):
+    """Form for requirements search."""
     #override cost input to be options
     ANY = 1
     LTE_50 = 50
@@ -71,6 +71,23 @@ class ProductForm(forms.ModelForm):
     ) + VendorProduct.CATEGORY
     category = forms.ChoiceField(choices=CATEGORY_CHOICES)
 
+    #ordering
+    PUB_DATE = 1
+    RECENTLY_UPDATED = 2
+    PRICE_ASC = 3
+    PRICE_DESC = 4
+    ORDERING_CHOICES = (
+        (NONE, "None"),
+        (PUB_DATE, "Published Date"),
+        (RECENTLY_UPDATED, "Recently Updated"),
+        (PRICE_ASC, "Price (Low to High)"),
+        (PRICE_DESC, "Price (High to Low)"),
+    )
+    ordering = forms.ChoiceField(choices=ORDERING_CHOICES)
+    
+    #payment type (mapped from model choices)
+    payment_type = forms.ChoiceField(choices = VendorProduct.PAYMENT_TYPE)
+
     class Meta:
         model = VendorProduct
-        fields = ['cost', 'category', 'payment_type']
+        fields = [ 'cost', 'ordering', 'category', 'payment_type']

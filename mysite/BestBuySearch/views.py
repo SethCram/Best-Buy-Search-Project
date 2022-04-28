@@ -18,7 +18,7 @@ from django.db.models import Q #for query objs
 from .models import VendorProduct, User, Customer, Vendor#, Question, Choice
 #from django.contrib.auth.models import User
 
-from .forms import CustomerSignUpForm, VendorSignUpForm, ProductForm
+from .forms import CustomerSignUpForm, VendorSignUpForm, RequirementForm
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -227,50 +227,28 @@ class SimilarResultsView(generic.ListView):
             )
             return similarmatch_list
 
+"""
 class RequirementResultsView(generic.ListView):
-    """
-    Requirements search results view. Incomplete.
-    """
+"""
+#Requirements search results view. Incomplete.
+"""
     model = VendorProduct    
     template_name = "BestBuySearch/requirement_results.html" 
     context_object_name = 'requirementmatch_list'
     
-    form_class = ProductForm
+    form_class = RequirementForm
 
     def get_context_data(self, **kwargs):
         context = super(RequirementResultsView, self).get_context_data(**kwargs)
-        context['form'] = ProductForm()
+        context['form'] = RequirementForm()
         return context
 
     #fields = ['name', 'cost', 'category', 'payment_type', 'product_description', 'brief_description']
     #form = SearchForm(request.GET)
-
-    """
-    def get_queryset(self):
 """
-#Return VendorProduct filtered by substring search.
-#Empty query returns four most recently updated products.
-"""
-        
-        #get user input from template
-        query = self.request.GET.get("q") 
-        
-        #if no query:
-        if( query == None ):
-            #order by most recently updated items:
-            requirementmatch_list = VendorProduct.objects.order_by('-update_date')[:4]
-            return requirementmatch_list
-        else:
-        
-            requirementmatch_list = VendorProduct.objects.filter(
-                #filter by name or category being similar
-                Q(name__icontains = query) | Q(category__icontains = query)
-            )
-            return requirementmatch_list
-    """
 
-def MultipleSearch(request): #name, cost, category, payment_type):
-    """Multiple search method to get DB data."""
+def MultipleSearch(request):
+    """Multiple search method to get DB data + output rslts to template."""
 
     #fill by default w/ all prods
     vendorproduct_obj = VendorProduct.objects.all()
@@ -283,31 +261,41 @@ def MultipleSearch(request): #name, cost, category, payment_type):
         cost = request.POST.get('cost')
         category = request.POST.get('category')
         payment_type = request.POST.get('payment_type')
+        ordering = request.POST.get('ordering')
         
         #filter by category unless no category
-        if( int(category) != ProductForm.NONE ):
+        if( int(category) != RequirementForm.NONE ):
             vendorproduct_obj = vendorproduct_obj.filter( category = category)
-            print(VendorProduct.objects.filter(category = category))
-            print("category: " + category )
 
         #vendorproduct_obj = VendorProduct.objects.raw('select * from VendorProduct where name="'+name+'" and cost="'+cost+'" and category="'+category+'" and payment_type="'+payment_type+'"')
         #filter by payment type (never empty)
         vendorproduct_obj = vendorproduct_obj.filter(payment_type=payment_type)
 
         #if cost isn't any
-        if( int(cost) != ProductForm.ANY ):
+        if( int(cost) != RequirementForm.ANY ):
             #filter less than cost
             vendorproduct_obj = vendorproduct_obj.filter(cost__lte = cost)            
 
+        #order by pub date
+        if( int(ordering) == RequirementForm.PUB_DATE ):
+            vendorproduct_obj = vendorproduct_obj.order_by('-pub_date')
+        #order by recently updated
+        elif( int(ordering) == RequirementForm.RECENTLY_UPDATED):
+            vendorproduct_obj = vendorproduct_obj.order_by('-update_date')
+        #order by price asc
+        elif( int(ordering) == RequirementForm.PRICE_ASC):
+            vendorproduct_obj = vendorproduct_obj.order_by('cost')
+        #order by price desc
+        elif( int(ordering) == RequirementForm.PRICE_DESC):
+            vendorproduct_obj = vendorproduct_obj.order_by('-cost')
+
+
         #context = {'name': name, 'cost': cost, 'category': category, 'payment_type': payment_type}
-    else:
-        form = ProductForm()
-        #return render(request, 'BestBuySearch/requirement_results.html', {'form': form} )
 
     #print("Post filter", vendorproduct_obj)
 
     #set form to product form always
-    form = ProductForm()
+    form = RequirementForm()
 
     context = {"VendorProduct": vendorproduct_obj, "form": form}
     return render(request,'BestBuySearch/requirement_results.html', context) 

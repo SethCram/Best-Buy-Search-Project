@@ -270,21 +270,46 @@ class RequirementResultsView(generic.ListView):
     """
 
 def MultipleSearch(request): #name, cost, category, payment_type):
+    """Multiple search method to get DB data."""
+
+    #fill by default w/ all prods
+    vendorproduct_obj = VendorProduct.objects.all()
+
+    #print("before filter ", vendorproduct_obj)
+
     if request.method == "POST":
         #should be passed in for us thru request
-        name = request.POST.get('name')
+        #name = request.POST.get('name')
         cost = request.POST.get('cost')
         category = request.POST.get('category')
         payment_type = request.POST.get('payment_type')
         
+        #filter by category unless no category
+        if( int(category) != ProductForm.NONE ):
+            vendorproduct_obj = vendorproduct_obj.filter( category = category)
+            print(VendorProduct.objects.filter(category = category))
+            print("category: " + category )
+
         #vendorproduct_obj = VendorProduct.objects.raw('select * from VendorProduct where name="'+name+'" and cost="'+cost+'" and category="'+category+'" and payment_type="'+payment_type+'"')
-        vendorproduct_obj = VendorProduct.objects.filter(name__iexact = name).filter(category=category).filter(payment_type=payment_type)
+        #filter by payment type (never empty)
+        vendorproduct_obj = vendorproduct_obj.filter(payment_type=payment_type)
+
+        #if cost isn't any
+        if( int(cost) != ProductForm.ANY ):
+            #filter less than cost
+            vendorproduct_obj = vendorproduct_obj.filter(cost__lte = cost)            
 
         #context = {'name': name, 'cost': cost, 'category': category, 'payment_type': payment_type}
     else:
-        vendorproduct_obj = VendorProduct.objects.all()
+        form = ProductForm()
+        #return render(request, 'BestBuySearch/requirement_results.html', {'form': form} )
 
-    context = {"VendorProduct": vendorproduct_obj}
+    #print("Post filter", vendorproduct_obj)
+
+    #set form to product form always
+    form = ProductForm()
+
+    context = {"VendorProduct": vendorproduct_obj, "form": form}
     return render(request,'BestBuySearch/requirement_results.html', context) 
 
 @method_decorator([login_required], name = 'dispatch') #why dispatch?

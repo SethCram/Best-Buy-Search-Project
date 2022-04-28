@@ -53,17 +53,24 @@ class ProductForm(forms.ModelForm):
     
     #override cost input to be options
     ANY = 1
-    LT_50 = 2
-    LT_100 = 3
-    LT_500 = 5
+    LTE_50 = 50
+    LTE_100 = 100
+    LTE_500 = 500
     COST_CHOICES = (
         (ANY, "Any"),
-        (LT_50, "< $50"),
-        (LT_100, "< $100"),
-        (LT_500, "< $500"),
+        (LTE_50, "<= $50"),
+        (LTE_100, "<= $100"),
+        (LTE_500, "<= $500"),
     )
     cost = forms.ChoiceField(choices = COST_CHOICES)
 
+    #add NONE field to default category search
+    NONE = 0
+    CATEGORY_CHOICES = (
+        (NONE, "None"),
+    ) + VendorProduct.CATEGORY
+    category = forms.ChoiceField(choices=CATEGORY_CHOICES)
+
     class Meta:
         model = VendorProduct
-        fields = ['name', 'cost', 'category', 'payment_type']
+        fields = ['cost', 'category', 'payment_type']

@@ -12,6 +12,9 @@ from django.contrib.auth.models import AbstractUser
 
 from django.urls import reverse
 
+from django.core.validators import MinValueValidator
+from decimal import *
+
 # Create your models here.
 
 #query model
@@ -45,7 +48,7 @@ class VendorProduct(models.Model):
     """Item created by vendors and purchased by clients."""
     #VID = models.ForeignKey(Vendor, on_delete = models.CASCADE)
     PID = models.BigAutoField(primary_key = True)
-    cost = models.DecimalField(default = 0, max_digits = 20, decimal_places = 2)
+    cost = models.DecimalField(default = 0, max_digits = 20, decimal_places = 2, validators=[MinValueValidator( Decimal('0.00'))] )
     name = models.CharField(max_length = 200)
 
     #category

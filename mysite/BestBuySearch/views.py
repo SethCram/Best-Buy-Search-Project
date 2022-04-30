@@ -53,34 +53,53 @@ class RecommendsView(generic.ListView):
 
         #if cart not empty
         if( checkoutproducts_list ):
-            #transform cart items into recd items
-
-            #declare as empty list (so can add to later)
-            #recdproduct_list = []
+            #use cart items to find recd items
 
             #declare empty set
-            recdproducts = set()
+            recdProductPKs = set()
 
-            #Return recommended items based on if item name in either description.
+            #Return recommended items based on if item name in either description of cart item.
             for prod in VendorProduct.objects.all():
-                #if cart product name in either descr of any product, and not the name of the prod
-                if( checkoutproducts_list.filter( 
-                    Q(brief_description__icontains = prod.name)
-                    | Q(product_description__icontains = prod.name)
-                    & ~Q(name__iexact = prod.name ) #names not equal
-                ) != None ):
-                    #print(cartProd.name + " found")
-                    #add to list of rec'd prods
-                    #recdproduct_list.append(cartProd)
-                    
-                    #add pk to set of pks
-                    recdproducts.add(prod.PID)
+                
+                #find prods w/ name in any cart items descr, and not the name of the prod
+                descr_match_objs = checkoutproducts_list.filter( 
+                        Q(brief_description__icontains = prod.name)
+                        | Q(product_description__icontains = prod.name)
+                    ).exclude( name__iexact = prod.name)
 
-                #for prod in VendorProduct.objects.all():
-                #    print(prod.name + ": brief_descr: " + prod.brief_description + " AND prod_descr: " + prod.product_description)
+                #debug: print("Found cart objs ", descr_match_objs )
+                
+                #if found any matching objs
+                if( descr_match_objs ):
+                    #debug: print("has " + prod.name + " in one of its descrs")
+                    #   print(prod.name + " added to recd items")
+
+                    #add pk to set of recd pk's
+                    recdProductPKs.add(prod.PID)
+
+            #Return recommended items based on if item name in either description of any obj.
+            for cartProd in checkoutproducts_list :
+                
+                #find prods w/ cart obj name in any items descr, and not the name of the cart prod
+                descr_match_objs = VendorProduct.objects.all().filter( 
+                        Q(brief_description__icontains = cartProd.name)
+                        | Q(product_description__icontains = cartProd.name)
+                    ).exclude( name__iexact = cartProd.name)
+
+                #debug: print("Found cart objs ", descr_match_objs )
+                
+                #if found any matching objs
+                if( descr_match_objs ):
+                    #debug: print("has " + cartProd.name + " in one of its descrs")
+                    #   print(cartProd.name + " added to recd items")
+   
+                    #for every matching obj found
+                    for match_obj in descr_match_objs.iterator():
+                        #add pk to set of recd pk's
+                        recdProductPKs.add(match_obj.PID)
 
             #find all prods w/ rec'd PID in em
-            recdproduct_list = VendorProduct.objects.filter(PID__in = recdproducts)
+            recdproduct_list = VendorProduct.objects.filter(PID__in = recdProductPKs)
 
             #order by low to high cost if non empty list
             if(recdproduct_list):
@@ -90,8 +109,6 @@ class RecommendsView(generic.ListView):
         else:
             #return empty list
             return checkoutproducts_list
-
-        
 
 @login_required
 @customer_required

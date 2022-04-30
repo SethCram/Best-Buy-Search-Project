@@ -40,7 +40,7 @@ class RecommendsView(generic.ListView):
      
     def get_queryset(self):
         """
-        Return recommended items based on item name in description.
+        Return recommended items based on whether item name in description.
         Order by price (low to high).
         """
 
@@ -103,7 +103,7 @@ class RecommendsView(generic.ListView):
 
             #order by low to high cost if non empty list
             if(recdproduct_list):
-                recdproduct_list = recdproduct_list.order_by('-cost')
+                recdproduct_list = recdproduct_list.order_by('cost')
             
             return recdproduct_list
         else:
@@ -330,16 +330,16 @@ def MultipleSearch(request):
         
         #filter by category unless no category
         if( int(category) != RequirementForm.NONE ):
-            vendorproduct_obj = vendorproduct_obj.filter( category = category)
+            vendorproduct_obj = vendorproduct_obj.filter( category = category).order_by('-PID')
 
         #vendorproduct_obj = VendorProduct.objects.raw('select * from VendorProduct where name="'+name+'" and cost="'+cost+'" and category="'+category+'" and payment_type="'+payment_type+'"')
         #filter by payment type (never empty)
-        vendorproduct_obj = vendorproduct_obj.filter(payment_type=payment_type)
+        vendorproduct_obj = vendorproduct_obj.filter(payment_type=payment_type).order_by('-PID')
 
         #if cost isn't any
         if( int(cost) != RequirementForm.ANY ):
             #filter less than cost
-            vendorproduct_obj = vendorproduct_obj.filter(cost__lte = cost)            
+            vendorproduct_obj = vendorproduct_obj.filter(cost__lte = cost).order_by('-PID')        
 
         #order by pub date
         if( int(ordering) == RequirementForm.PUB_DATE ):

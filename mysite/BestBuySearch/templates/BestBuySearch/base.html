@@ -63,6 +63,10 @@
                                 
                                     
                                 {% else %}
+
+                                <li class="nav-item"><a class="nav-link" href="{% url 'BestBuySearch:recommends' %}">Recommendations</a></li> 
+                                
+                                <!-- cart -->
                                 <form class="d-flex">
                                     <a class="nav-link" type = "submit" href="{% url 'BestBuySearch:checkout' %}">
                                         <i class="bi-cart-fill me-1"></i>

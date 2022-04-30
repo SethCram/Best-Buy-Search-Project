@@ -30,6 +30,69 @@ from .decorators import customer_required, vendor_required
 
 #cart related views
 
+@method_decorator([login_required, customer_required], name = 'dispatch') #why dispatch?
+class RecommendsView(generic.ListView):
+    """Recommendation product view displayed based on cart items."""
+    template_name = 'BestBuySearch/recommends.html'
+    #usable from html:
+    context_object_name = 'recdproduct_list'
+    paginate_by = 40
+     
+    def get_queryset(self):
+        """
+        Return recommended items based on item name in description.
+        Order by price (low to high).
+        """
+
+        #get all items in cart
+
+        #find customer w/ user id
+        customer = Customer.objects.get(pk = self.request.user.id)
+        #retrieve that customer's products added to their cart
+        checkoutproducts_list = customer.products.all() 
+
+        #if cart not empty
+        if( checkoutproducts_list ):
+            #transform cart items into recd items
+
+            #declare as empty list (so can add to later)
+            #recdproduct_list = []
+
+            #declare empty set
+            recdproducts = set()
+
+            #Return recommended items based on if item name in either description.
+            for prod in VendorProduct.objects.all():
+                #if cart product name in either descr of any product, and not the name of the prod
+                if( checkoutproducts_list.filter( 
+                    Q(brief_description__icontains = prod.name)
+                    | Q(product_description__icontains = prod.name)
+                    & ~Q(name__iexact = prod.name ) #names not equal
+                ) != None ):
+                    #print(cartProd.name + " found")
+                    #add to list of rec'd prods
+                    #recdproduct_list.append(cartProd)
+                    
+                    #add pk to set of pks
+                    recdproducts.add(prod.PID)
+
+                #for prod in VendorProduct.objects.all():
+                #    print(prod.name + ": brief_descr: " + prod.brief_description + " AND prod_descr: " + prod.product_description)
+
+            #find all prods w/ rec'd PID in em
+            recdproduct_list = VendorProduct.objects.filter(PID__in = recdproducts)
+
+            #order by low to high cost if non empty list
+            if(recdproduct_list):
+                recdproduct_list = recdproduct_list.order_by('-cost')
+            
+            return recdproduct_list
+        else:
+            #return empty list
+            return checkoutproducts_list
+
+        
+
 @login_required
 @customer_required
 def add_to_cart(request, pk):
@@ -47,7 +110,6 @@ def add_to_cart(request, pk):
     
     #send to checkout
     #return redirect('BestBuySearch:checkout')
-
     #redirect user to url user left
     #return HttpResponseRedirect(request.path_info)
 

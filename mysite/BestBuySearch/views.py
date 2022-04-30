@@ -8,6 +8,8 @@ from django.views import generic
 
 from django.utils import timezone
 
+from django.core.paginator import Paginator
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
@@ -152,7 +154,7 @@ class ProductView(generic.ListView):
     template_name = 'BestBuySearch/products.html'
     #usable from html:
     context_object_name = 'vendorproduct_list'
-    
+    paginate_by = 40
      
     def get_queryset(self):
         """Return four most recently updated products."""
@@ -173,6 +175,8 @@ class ExactResultsView(generic.ListView):
     model = VendorProduct
     template_name = "BestBuySearch/exact_results.html" #have to specify app_name/template_name bc templates r namespaced using app_name
     context_object_name = 'exactmatch_list'
+
+    paginate_by = 40
     
     def get_queryset(self):
         """
@@ -204,6 +208,8 @@ class SimilarResultsView(generic.ListView):
     model = VendorProduct
     template_name = "BestBuySearch/similar_results.html" #have to specify app_name/template_name bc templates r namespaced using app_name
     context_object_name = 'similarmatch_list'
+
+    paginate_by = 40
     
     def get_queryset(self):
         """
@@ -226,26 +232,6 @@ class SimilarResultsView(generic.ListView):
                 Q(name__icontains = query) | Q(category__icontains = query)
             )
             return similarmatch_list
-
-"""
-class RequirementResultsView(generic.ListView):
-"""
-#Requirements search results view. Incomplete.
-"""
-    model = VendorProduct    
-    template_name = "BestBuySearch/requirement_results.html" 
-    context_object_name = 'requirementmatch_list'
-    
-    form_class = RequirementForm
-
-    def get_context_data(self, **kwargs):
-        context = super(RequirementResultsView, self).get_context_data(**kwargs)
-        context['form'] = RequirementForm()
-        return context
-
-    #fields = ['name', 'cost', 'category', 'payment_type', 'product_description', 'brief_description']
-    #form = SearchForm(request.GET)
-"""
 
 def MultipleSearch(request):
     """Multiple search method to get DB data + output rslts to template."""
@@ -289,22 +275,27 @@ def MultipleSearch(request):
         elif( int(ordering) == RequirementForm.PRICE_DESC):
             vendorproduct_obj = vendorproduct_obj.order_by('-cost')
 
-
-        #context = {'name': name, 'cost': cost, 'category': category, 'payment_type': payment_type}
-
     #print("Post filter", vendorproduct_obj)
 
     #set form to product form always
     form = RequirementForm()
 
-    context = {"VendorProduct": vendorproduct_obj, "form": form}
+    #pagination:
+    paginator = Paginator(vendorproduct_obj, 40)
+    page_number = request.GET.get('page') #should be POST not GET?
+    page_obj = paginator.get_page(page_number)
+
+    #render template with given context
+    context = {"VendorProduct": vendorproduct_obj, "form": form, "page_obj": page_obj}
     return render(request,'BestBuySearch/requirement_results.html', context) 
 
 @method_decorator([login_required], name = 'dispatch') #why dispatch?
-class AllProductsView( generic.ListView ):
+class ThisVendorsProductsView( generic.ListView ):
     #unneeded?: model = VendorProduct
     template_name = "BestBuySearch/all_products.html" #have to specify app_name/template_name bc templates r namespaced using app_name
     context_object_name = 'allproducts_list'
+
+    paginate_by = 100
 
     def get_queryset(self):
         """

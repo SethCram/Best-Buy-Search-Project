@@ -10,6 +10,7 @@ from .models import Vendor, User, Customer, VendorProduct
 #from django.contrib.auth.models import User
 
 class CustomerSignUpForm(UserCreationForm):
+    Agree_Terms = forms.BooleanField(required=True, label="I agree to the Terms and Conditions")
     
     class Meta(UserCreationForm.Meta):
         """Signup redef'd user."""
@@ -31,7 +32,9 @@ class CustomerSignUpForm(UserCreationForm):
     
 class VendorSignUpForm(UserCreationForm):
     """Add brand name field to default vendor sign up."""
-    brand = forms.CharField(required = True)
+
+    brand = forms.CharField(required = True, label="Brand Name")
+    Agree_Terms = forms.BooleanField(required=True, label="I agree to the Terms and Conditions")
     
     class Meta(UserCreationForm.Meta):
         """Signup redef'd user."""

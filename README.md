@@ -3,13 +3,13 @@
 **Technologies:**
 - Host = ?
 - Database Server = PHPMyAdmin run with XAMPP
-- IDEs = Spyder, Visual Studio
+- IDEs = Spyder, Visual Studio, VSCode
 - Version Control = Git
-- Packages = mysqlclient, python-decouple, pillow
+- Packages = mysqlclient, python-decouple, pillow, faker
 - Backend = Django
-- Backend Languages = Python, MySQL 
+- Backend Languages = Python, SQL 
 - Frontend = Bootstrap
-- Frontend Languages = HTML, CSS, js
+- Frontend Languages = HTML, CSS, JS
 
 **Setup:**
 - 

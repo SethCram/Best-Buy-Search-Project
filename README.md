@@ -17,8 +17,9 @@
 - Upon navigating to the website, you'll be prompted to login to an account
 - Choose to create an account as a customer or vendor
 - Login to the account you created
-- Once logged on, a customer can view vendor posted products through multiple methods
-- 
+- Once logged on, either user type can view vendor posted products through exact, similar, and requirement searches or logout 
+- Once logged on, a customer can add vendor products to their cart and look at products being recommended to them
+- Once logged on, a vendor can post, edit, and delete items
 
 **Technologies:**
 - Host = ?

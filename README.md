@@ -1,7 +1,7 @@
 # BestBuy RDMS: Seth Cram, Chadwick Goodall
 
 
-**Setup:**
+**Setup for personal use:**
 1. Install XAMPP and get PHPMyAdmin working
 2. Create a database called "BestBuy_RD"
 3. Setup a virtual environment if on Windows
@@ -12,6 +12,13 @@
 8. Run "makemigrations" and "migrate" them 
 9. Then, "runserver"
 10. Navigate to "http://127.0.0.1:8000/BestBuySearch/products/" in your browser
+
+**How to use:**
+- Upon navigating to the website, you'll be prompted to login to an account
+- Choose to create an account as a customer or vendor
+- Login to the account you created
+- Once logged on, a customer can view vendor posted products through multiple methods
+- 
 
 **Technologies:**
 - Host = ?

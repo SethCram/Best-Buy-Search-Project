@@ -21,6 +21,31 @@
 - Once logged on, a customer can add vendor products to their cart and look at products being recommended to them
 - Once logged on, a vendor can post, edit, and delete items
 
+**Scheme:**
+*Vendor:*
+- VID
+- Brand
+- PID
+
+*Customer:*
+- CID
+- PID
+
+*VendorProduct:*
+- PID
+- name
+- cost
+- category
+- quantity
+- payment_type
+- product_description
+- brief_description
+- big_image
+- small_image
+- publish_date
+- update_date
+- VID
+
 **Technologies:**
 - Host = ?
 - Database Server = PHPMyAdmin run with XAMPP

@@ -12,7 +12,7 @@
 8. Run "makemigrations" and "migrate" them 
 9. Then, "runserver"
 10. Navigate to "http://127.0.0.1:8000/BestBuySearch/products/" in your browser
-
+---
 **How to use:**
 - Upon navigating to the website, you'll be prompted to login to an account
 - Choose to create an account as a customer or vendor
@@ -20,8 +20,9 @@
 - Once logged on, either user type can view vendor posted products through exact, similar, and requirement searches or logout 
 - Once logged on, a customer can add vendor products to their cart and look at products being recommended to them
 - Once logged on, a vendor can post, edit, and delete items
-
+---
 **Scheme:**
+
 *Vendor:*
 - VID
 - Brand
@@ -45,7 +46,7 @@
 - publish_date
 - update_date
 - VID
-
+---
 **Technologies:**
 - Host = ?
 - Database Server = PHPMyAdmin run with XAMPP
@@ -56,4 +57,3 @@
 - Backend Languages = Python, SQL 
 - Frontend = Bootstrap
 - Frontend Languages = HTML, CSS, JS
-

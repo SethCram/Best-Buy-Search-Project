@@ -28,23 +28,23 @@ Legend:
 - *italicized* = foreign key
 
 User:
-- **id**
-- **username**
+- **id** (primary key)
+- **username** (primary key)
 - password
 - is_vendor
 - is_customer
 
 Vendor:
-- *VID*
+- *VID* (foreign key)
 - brand
-- *PID*
+- *PID* (foreign key)
 
 Customer:
-- *CID*
-- *PID*
+- *CID* (foreign key)
+- *PID* (foreign key)
 
 VendorProduct:
-- **PID**
+- **PID** (primary key)
 - name
 - cost
 - category

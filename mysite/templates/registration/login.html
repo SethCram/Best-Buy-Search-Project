@@ -1,16 +1,25 @@
 <!-- templates/registration/login.html -->
+
+{% extends "registration/base.html" %}
+
+{% block content %}
+<div align="center">
 <h2>Log In</h2>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Log In</button>
+  <button type="submit" class="btn btn-dark">Log In</button>
 </form>
 
-<div class="container px-4 px-lg-5 my-5">
+<div class="container-sm px-4 px-lg-5 my-5">
 	<div class="text-center text-white">
-		<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-			<li class="nav-item"><a class="nav-link" href="{% url 'BestBuySearch:customer_signup' %}">Create Customer Account</a></li>
-			<li class="nav-item"><a class="nav-link" href="{% url 'BestBuySearch:vendor_signup' %}">Create Vendor Account</a></li>
+		<ul class="list-group">
+			<li type="button" class="list-group-item  list-group-item-action">
+				<a class="nav-link" href="{% url 'BestBuySearch:customer_signup' %}">Create Customer Account</a></li>
+			<li type="button" class="list-group-item  list-group-item-action">
+				<a class="nav-link" href="{% url 'BestBuySearch:vendor_signup' %}">Create Vendor Account</a></li>
 		</ul>
 	</div>
 </div>
+</div>
+{% endblock %}

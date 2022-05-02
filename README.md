@@ -12,6 +12,7 @@
 8. Run "makemigrations" and "migrate" them 
 9. Then, "runserver"
 10. Navigate to "http://127.0.0.1:8000/BestBuySearch/products/" in your browser
+11. Can run the "createdata" command with an integer argument to create some test data
 
 ## **How to use:**
 - Upon navigating to the website, you'll be prompted to login to an account

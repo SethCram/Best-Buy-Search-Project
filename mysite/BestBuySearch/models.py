@@ -112,10 +112,10 @@ class VendorProduct(models.Model):
     brief_description = models.CharField(max_length=20, default='brief description...')
 
     #display images (auto uploads to media folder)
-    #WIDTH_REQ = 600
-    #HEIGHT_REQ = 700
-    #small_display_image = models.ImageField(upload_to='images/', width_field=450, height_field=300, max_length=100)
-    #big_display_image = models.ImageField(upload_to='images/', width_field=WIDTH_REQ, height_field=HEIGHT_REQ, max_length=100)
+        #WIDTH_REQ = 600
+        #HEIGHT_REQ = 700
+        #small_display_image = models.ImageField(upload_to='images/', width_field=450, height_field=300, max_length=100)
+        #big_display_image = models.ImageField(upload_to='images/', width_field=WIDTH_REQ, height_field=HEIGHT_REQ, max_length=100)
     small_display_image = models.ImageField(upload_to='images/', max_length=500)
     big_display_image = models.ImageField(upload_to='images/', max_length=500) 
         #no idea how to restrict the upload resolution

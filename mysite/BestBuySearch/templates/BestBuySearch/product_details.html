@@ -21,7 +21,7 @@
                             <div class="small mb-1">{{ vendorproduct.quantity }} left </div>
                             <h1 class="display-5 fw-bolder">{{ vendorproduct.name }}</h1>
                             <div class="fs-5 mb-5">
-                                <span>${{ vendorproduct.cost }}</span>
+                                <span>${{ vendorproduct.cost }} {{ vendorproduct.get_payment_type_display }}</span>
                             </div>
                             <p class="lead">{{ vendorproduct.product_description }}</p>
                             <div class="d-flex">

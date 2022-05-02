@@ -47,17 +47,21 @@
                       <h6 class="my-0">{{ vendorproduct.name }}</h6>
                       <small class="text-muted"> {{ vendorproduct.brief_description }} </small>
                     </div>
-                    <span class="text-muted">${{ vendorproduct.cost }}</span>
+                    <div>
+                      <span class="text-muted">${{ vendorproduct.cost }} </span>
+                      <small class="text-muted"> {{ vendorproduct.get_payment_type_display }} </small>
+                    </div>
                     <a class="btn btn-outline-dark mt-auto" href="{% url 'BestBuySearch:rm_from_cart' vendorproduct.PID %}" > Remove </a>
                   </li>
                 {% endfor %}
               {% endif %}
-
+            <!--
               <li class="list-group-item d-flex justify-content-between">
                 <span>Total (USD)</span>
                 <strong>$____</strong>
               </li>
             </ul>
+            -->
 
           </div>
           <div class="col-md-8 order-md-1">

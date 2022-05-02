@@ -43,6 +43,8 @@
                                     <h5 class="fw-bolder">{{ vendorproduct.name }}</h5>
                                     <!-- Product price-->
                                     ${{ vendorproduct.cost }}
+                                    <!-- Product pay type-->
+                                    <p> {{ vendorproduct.get_payment_type_display }} </p>
                                 </div>
                             </div>
                             <!-- Product actions-->

@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from faker import Faker
 import faker.providers
 import random
@@ -10,6 +10,7 @@ from django.utils import timezone
 from BestBuySearch.models import VendorProduct, User, Customer, Vendor 
 
 class ExtraProvider(faker.providers.BaseProvider):
+    """Adds an extra, user defined provider to faker."""
     def category(self):
         return self.random_element(VendorProduct.CATEGORY)
 
@@ -17,20 +18,29 @@ class ExtraProvider(faker.providers.BaseProvider):
         return self.random_element(VendorProduct.PAYMENT_TYPE)
 
 class Command( BaseCommand ):
-    help = "Command information"
+    """
+    Generates products and a vendor who created them.
+    Requires a number of products to create as an arg.
+    """
+    help = "Creates test data for BestBuySearch products."
+
+    def add_arguments(self, parser):
+        """Add an additional arg to run command."""
+        parser.add_argument('number_of_products', type=int)
 
     def handle(self, *args, **kwargs):
-        """Function called w/ command run."""
-        #print("hello")
+        """
+        Function calls w/ command runs to generate 
+            products and a vendor who created them.
+        Requires a number of products to create as an arg.
+        """
 
-        NUM_OF_PRODS = 2
+        NUM_OF_PRODS = kwargs['number_of_products']
 
         #init faker
         fake = Faker()
         fake.add_provider(ExtraProvider)
         fake.add_provider(faker_commerce.Provider)
-
-        #print(fake.category())
 
         print("before faking num of prods: ", VendorProduct.objects.all().count() )
 
@@ -44,29 +54,22 @@ class Command( BaseCommand ):
         #create specified num of prods
         for _ in range(NUM_OF_PRODS):
 
-            #id = faker.random.uuid()
-            #username = faker.internet.userName()
-
             name = fake.ecommerce_name() #fake.word()
-            cost = fake.ecommerce_price() #round(random.uniform(0.00, 1000.99), 2) #gens str: fake.pricetag() 
+            cost = round(random.uniform(0.00, 10000.99), 2) #fake.ecommerce_price() #gens str: fake.pricetag() 
             #debug: print("cost:", cost)
-            category = fake.random_int(1, 20)
+            category = fake.random_int(1, len(VendorProduct.CATEGORY)) #goes up to 20 rn
             quantity = fake.random_int(1, 1000)
-            payment_type = fake.random_int(1,2)
+            payment_type = fake.random_int(1, len(VendorProduct.PAYMENT_TYPE)) #goes up to 20 rn
             prod_descr = fake.paragraph(nb_sentences=3)
             brief_descr = fake.text(max_nb_chars=20)
-            #don't actually work for display
+            #won't actually work to display images
             small_image = fake.image_url()
             big_image = fake.image_url()
 
             update_date = timezone.now() #tuple: fake.date_this_decade()
             pub_date = fake.date_this_decade()
 
-            #update and pub date should be added w/ saving create prods
-            #won't "created_by" be added too?
-
             VendorProduct.objects.create(
-                #created_by=user, #created_by,
                 name=name,
                 cost=cost,
                 category=category,

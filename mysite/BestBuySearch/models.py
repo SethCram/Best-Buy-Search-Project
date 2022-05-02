@@ -99,9 +99,11 @@ class VendorProduct(models.Model):
     #payment type
     IN_FULL = 1
     MONTHLY = 2
+    ANNUALLY = 3
     PAYMENT_TYPE = (
-        (IN_FULL, 'in full'),
+        (IN_FULL, 'one time payment'),
         (MONTHLY, 'monthly'),
+        (ANNUALLY, 'annually'),
     )
     payment_type = models.PositiveSmallIntegerField( choices=PAYMENT_TYPE, default=IN_FULL)
 

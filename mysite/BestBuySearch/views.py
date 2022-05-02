@@ -36,7 +36,7 @@ class RecommendsView(generic.ListView):
     template_name = 'BestBuySearch/recommends.html'
     #usable from html:
     context_object_name = 'recdproduct_list'
-    paginate_by = 40
+    paginate_by = 20
      
     def get_queryset(self):
         """
@@ -233,7 +233,7 @@ class ProductView(generic.ListView):
     template_name = 'BestBuySearch/products.html'
     #usable from html:
     context_object_name = 'vendorproduct_list'
-    paginate_by = 40
+    paginate_by = 20
      
     def get_queryset(self):
         """Return four most recently updated products."""
@@ -255,7 +255,7 @@ class ExactResultsView(generic.ListView):
     template_name = "BestBuySearch/exact_results.html" #have to specify app_name/template_name bc templates r namespaced using app_name
     context_object_name = 'exactmatch_list'
 
-    paginate_by = 40
+    paginate_by = 20
     
     def get_queryset(self):
         """
@@ -288,7 +288,7 @@ class SimilarResultsView(generic.ListView):
     template_name = "BestBuySearch/similar_results.html" #have to specify app_name/template_name bc templates r namespaced using app_name
     context_object_name = 'similarmatch_list'
 
-    paginate_by = 40
+    paginate_by = 20
     
     def get_queryset(self):
         """
@@ -360,7 +360,7 @@ def MultipleSearch(request):
     form = RequirementForm()
 
     #pagination:
-    paginator = Paginator(vendorproduct_obj, 40)
+    paginator = Paginator(vendorproduct_obj, 20)
     page_number = request.GET.get('page') #should be POST not GET?
     page_obj = paginator.get_page(page_number)
 
@@ -374,7 +374,7 @@ class ThisVendorsProductsView( generic.ListView ):
     template_name = "BestBuySearch/all_products.html" #have to specify app_name/template_name bc templates r namespaced using app_name
     context_object_name = 'allproducts_list'
 
-    paginate_by = 100
+    paginate_by = 50
 
     def get_queryset(self):
         """

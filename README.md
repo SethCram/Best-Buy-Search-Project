@@ -63,7 +63,7 @@ VendorProduct:
 - Database Server = PHPMyAdmin run with XAMPP
 - IDEs = Spyder, Visual Studio, VSCode
 - Version Control = Git
-- Packages = mysqlclient, python-decouple, pillow, faker
+- Packages = mysqlclient, python-decouple, pillow, faker, faker-ecommerce
 - Backend = Django
 - Backend Languages = Python, SQL 
 - Frontend = Bootstrap

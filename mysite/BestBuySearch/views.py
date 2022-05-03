@@ -1,3 +1,4 @@
+from sre_constants import CATEGORY
 from django.shortcuts import render, redirect, get_object_or_404
 
 from django.http import HttpResponseRedirect
@@ -272,11 +273,20 @@ class ExactResultsView(generic.ListView):
             exactmatch_list = VendorProduct.objects.order_by('-update_date')[:4]
             return exactmatch_list
         else:
-        
+            #default to zero since no category 0
+            category_num = 0
+
+            #check all categories:
+            for category in VendorProduct.CATEGORY:
+                #if category's human readable name 
+                if( category[1].casefold() == query.casefold() ):
+                    #debug: print(category[0])
+                    category_num = category[0]
+
             exactmatch_list = VendorProduct.objects.filter(
                 #filter by name and category being contained
-                Q(name__iexact = query) | Q(category__iexact = query)
-            )
+                Q(name__iexact = query) | Q(category = category_num)
+            ).order_by('-PID')
             return exactmatch_list
         
         
@@ -305,11 +315,22 @@ class SimilarResultsView(generic.ListView):
             similarmatch_list = VendorProduct.objects.order_by('-update_date')[:4]
             return similarmatch_list
         else:
+
+            #default to zero since no category 0
+            category_num = 0
+
+            #check all categories:
+            for category in VendorProduct.CATEGORY:
+                #if a substr in category's human readable name 
+                #   only works for 1 category as sel'd
+                if( query.casefold() in category[1].casefold() ):
+                    #debug: print(category[0])
+                    category_num = category[0]
         
             similarmatch_list = VendorProduct.objects.filter(
                 #filter by name or category being similar
-                Q(name__icontains = query) | Q(category__icontains = query)
-            )
+                Q(name__icontains = query) | Q(category = category_num)
+            ).order_by('-PID')
             return similarmatch_list
 
 def MultipleSearch(request):

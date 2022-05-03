@@ -1,14 +1,8 @@
 <!-- templates/registration/vendor_signup.html -->
 
-{% extends "registration/base.html" %}
-
-
-{% block back %}
-<button class="btn btn-primary" onclick="history.back()">Go Back</button>
-{% endblock %}
+<button onclick="history.back()">Go Back</button>
 
 {% block content %}
-<div class="container col-6" align="left">
   <h2>Vendor Sign Up</h2>
   <form method="post">
     {% csrf_token %}
@@ -17,9 +11,8 @@
     <div>
       <a target="_blank" href="https://www.termsfeed.com/live/0625eac9-112a-4887-a7e6-c2b88100937e">Terms and Conditions</a>
     </div>
-    <button class="btn btn-primary" type="submit">Sign Up</button>
+    <button type="submit">Sign Up</button>
   </form>
-  </div>
 {% endblock %}
 
 

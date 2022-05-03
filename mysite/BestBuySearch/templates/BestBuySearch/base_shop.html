@@ -15,7 +15,7 @@
         
         <!-- Header-->
         {% block header %}
-            <header class="bg-primary py-5">
+            <header class="bg-dark py-5">
                 <div class="container px-4 px-lg-5 my-5">
                     <div class="text-center text-white">
                         <h1 class="display-4 fw-bolder">Shop in style</h1>
@@ -96,7 +96,7 @@
 
         {% block pagination %}
         
-            <div class="pagination col-2 mx-auto " align="left">
+            <div class="pagination">
                 <span class="step-links">
                     {% if page_obj.has_previous %}
                         <a href="?page=1">&laquo; first</a>

@@ -1,19 +1,30 @@
 <!-- templates/BestBuySearch/VendorProduct_form.html -->
+
+{% extends 'Registration/base.html' %}
+
+
 <!DOCTYPE html>
 
     <head>
     
     </head>
     
+    {% block back %}
+    <button class="btn btn-dark" onclick="history.back()">Go Back</button>
+    {% endblock %}
+
     <body>
-        <button onclick="history.back()">Go Back</button>
+        {% block content %}
+        
         <h2>Register Item</h2>
         <form method="post" enctype = "multipart/form-data">
           {% csrf_token %}
           {{ form.as_p }}
           <h4> Recommended image resolutions: 450 x 300 and 600 x 700 </h4>
-          <button type="submit">Add Item</button>
+          <button class="btn btn-dark my-3" type="submit">Add Item</button>
         </form>
+        {% endblock %}
     </body>
-    
+
+
 </html>

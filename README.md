@@ -69,8 +69,3 @@ VendorProduct:
 - Backend Languages = Python, SQL 
 - Frontend = Bootstrap
 - Frontend Languages = HTML, CSS, JS
-
-## **Development Stages:**
-- Phase 1 project report about the ER diagram modeling on March 8th, 2022
-- Phase 2 project report concerning normalization and itermediate demo on April 21st  
-- Phase 3 comprehensive project report and final demo on May 5th, 2022 

@@ -65,7 +65,7 @@ class RecommendsView(generic.ListView):
                 descr_match_objs = checkoutproducts_list.filter( 
                         Q(brief_description__icontains = prod.name)
                         | Q(product_description__icontains = prod.name)
-                    ).exclude( name__iexact = prod.name)
+                    ).exclude( name__iexact = prod.name).order_by("-PID")
 
                 #debug: print("Found cart objs ", descr_match_objs )
                 
@@ -84,7 +84,7 @@ class RecommendsView(generic.ListView):
                 descr_match_objs = VendorProduct.objects.all().filter( 
                         Q(brief_description__icontains = cartProd.name)
                         | Q(product_description__icontains = cartProd.name)
-                    ).exclude( name__iexact = cartProd.name)
+                    ).exclude( name__iexact = cartProd.name).order_by("-PID")
 
                 #debug: print("Found cart objs ", descr_match_objs )
                 
@@ -99,7 +99,7 @@ class RecommendsView(generic.ListView):
                         recdProductPKs.add(match_obj.PID)
 
             #find all prods w/ rec'd PID in em
-            recdproduct_list = VendorProduct.objects.filter(PID__in = recdProductPKs)
+            recdproduct_list = VendorProduct.objects.filter(PID__in = recdProductPKs).order_by("-PID")
 
             #order by low to high cost if non empty list
             if(recdproduct_list):
@@ -260,7 +260,7 @@ class ExactResultsView(generic.ListView):
     def get_queryset(self):
         """
         Return VendorProduct filtered by search.
-        Empty query returns four most recently updated products.
+        Empty query returns a query done with an empty string.
         """
         
         #get user input from template
@@ -269,15 +269,26 @@ class ExactResultsView(generic.ListView):
         #if no query:
         if( query == None ):
             #order by most recently updated items:
-            print("no query so printed all items.")
-            exactmatch_list = VendorProduct.objects.all().order_by('-update_date')[:4]
+            #exactmatch_list = VendorProduct.objects.all().order_by('-update_date')[:4]
+            
+            exactmatch_list = VendorProduct.objects.filter(
+                #filter by name and category being contained
+                Q(name__iexact = "") | Q(category__iexact = "")
+            ).order_by("-PID")
             return exactmatch_list
         else:
+
+            category_num = 0
+
+            #set category num to a category case-insensitively matching
+            for category in VendorProduct.CATEGORY:
+                if( category[1].casefold() == query.casefold() ):
+                    category_num = category[0]
         
             exactmatch_list = VendorProduct.objects.filter(
                 #filter by name and category being contained
-                Q(name__iexact = query) | Q(category__iexact = query)
-            )
+                Q(name__iexact = query) | Q(category = category_num)
+            ).order_by("-PID")
             return exactmatch_list
         
 @method_decorator([login_required], name = 'dispatch') 
@@ -294,7 +305,7 @@ class SimilarResultsView(generic.ListView):
     def get_queryset(self):
         """
         Return VendorProduct filtered by substring search.
-        Empty query returns four most recently updated products.
+        Empty query returns a query done with an empty string.
         """
         
         #get user input from template
@@ -303,14 +314,28 @@ class SimilarResultsView(generic.ListView):
         #if no query:
         if( query == None ):
             #order by most recently updated items:
-            similarmatch_list = VendorProduct.objects.order_by('-update_date')[:4]
-            return similarmatch_list
-        else:
-        
+            #similarmatch_list = VendorProduct.objects.order_by('-update_date')[:4]
+            
+            #search using an empty str
             similarmatch_list = VendorProduct.objects.filter(
                 #filter by name or category being similar
-                Q(name__icontains = query) | Q(category__icontains = query)
-            )
+                Q(name__icontains = "") | Q(category__icontains = "")
+            ).order_by("-PID")
+            return similarmatch_list
+        else:
+            
+            category_num = 0
+            
+            #set category num to category with sub-str of search 
+            for category in VendorProduct.CATEGORY:
+                    if( query.casefold() in category[1].casefold() ):
+                        category_num = category[0]
+
+
+            similarmatch_list = VendorProduct.objects.filter(
+                #filter by name  being similar or category being found
+                Q(name__icontains = query) | Q(category = category_num)
+            ).order_by("-PID")
             return similarmatch_list
 
 @login_required
@@ -335,8 +360,6 @@ def MultipleSearch(request):
             vendorproduct_obj = vendorproduct_obj.filter( category = category).order_by('-PID')
 
         #vendorproduct_obj = VendorProduct.objects.raw('select * from VendorProduct where name="'+name+'" and cost="'+cost+'" and category="'+category+'" and payment_type="'+payment_type+'"')
-        #filter by payment type (never empty)
-        #vendorproduct_obj = vendorproduct_obj.filter(payment_type=payment_type).order_by('-PID')
 
         #if payment type isn't any
         if( int(payment_type) != RequirementForm.ANY):
@@ -360,10 +383,11 @@ def MultipleSearch(request):
         #order by price desc
         elif( int(ordering) == RequirementForm.PRICE_DESC):
             vendorproduct_obj = vendorproduct_obj.order_by('-cost')
-    #if GET request
-    else:
+    
+    #if GET request (messes up pagination)
+    #else:
         #order by top 4 most recently updated items:
-        vendorproduct_obj = vendorproduct_obj.order_by('-update_date')[:4]
+        #endorproduct_obj = vendorproduct_obj.order_by('-update_date')[:4]
 
     #print("Post filter", vendorproduct_obj)
 
@@ -393,10 +417,10 @@ class ThisVendorsProductsView( generic.ListView ):
         If customer return all products.
         """
         if(self.request.user.is_vendor):
-            allproducts_list = VendorProduct.objects.filter(created_by = self.request.user.id)
+            allproducts_list = VendorProduct.objects.filter(created_by = self.request.user.id).order_by("-PID")
             return allproducts_list
         elif(self.request.user.is_customer):
-            allproducts_list = VendorProduct.objects.all()
+            allproducts_list = VendorProduct.objects.all().order_by("-PID")
             return allproducts_list
    
 #form views    

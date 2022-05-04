@@ -249,7 +249,7 @@ class ProductDetailsView(generic.DetailView): #should be DetailView not ListView
     #usable from html:
     #can't have in details view?: context_object_name = 'recommendedproduct_list'
      
-
+@method_decorator([login_required], name = 'dispatch') 
 class ExactResultsView(generic.ListView):
     """Exact search results view."""
     model = VendorProduct
@@ -270,7 +270,8 @@ class ExactResultsView(generic.ListView):
         #if no query:
         if( query == None ):
             #order by most recently updated items:
-            exactmatch_list = VendorProduct.objects.order_by('-update_date')[:4]
+            print("no query so printed all items.")
+            exactmatch_list = VendorProduct.objects.all().order_by('-update_date')[:4]
             return exactmatch_list
         else:
             #default to zero since no category 0
@@ -289,7 +290,7 @@ class ExactResultsView(generic.ListView):
             ).order_by('-PID')
             return exactmatch_list
         
-        
+@method_decorator([login_required], name = 'dispatch') 
 class SimilarResultsView(generic.ListView):
     """
     Similar search results view. 
@@ -333,15 +334,16 @@ class SimilarResultsView(generic.ListView):
             ).order_by('-PID')
             return similarmatch_list
 
+@login_required
 def MultipleSearch(request):
     """Multiple search method to get DB data + output rslts to template."""
 
     #fill by default w/ all prods
-    vendorproduct_obj = VendorProduct.objects.all()
+    vendorproduct_obj = VendorProduct.objects.all().order_by('-PID')
 
     #print("before filter ", vendorproduct_obj)
 
-    if request.method == "POST":
+    if (request.method == "POST"): #or request.method == "GET"):
         #should be passed in for us thru request
         #name = request.POST.get('name')
         cost = request.POST.get('cost')
@@ -355,7 +357,12 @@ def MultipleSearch(request):
 
         #vendorproduct_obj = VendorProduct.objects.raw('select * from VendorProduct where name="'+name+'" and cost="'+cost+'" and category="'+category+'" and payment_type="'+payment_type+'"')
         #filter by payment type (never empty)
-        vendorproduct_obj = vendorproduct_obj.filter(payment_type=payment_type).order_by('-PID')
+        #vendorproduct_obj = vendorproduct_obj.filter(payment_type=payment_type).order_by('-PID')
+
+        #if payment type isn't any
+        if( int(payment_type) != RequirementForm.ANY):
+            #filter by payment type
+            vendorproduct_obj = vendorproduct_obj.filter(payment_type=payment_type).order_by('-PID')
 
         #if cost isn't any
         if( int(cost) != RequirementForm.ANY ):
@@ -374,6 +381,10 @@ def MultipleSearch(request):
         #order by price desc
         elif( int(ordering) == RequirementForm.PRICE_DESC):
             vendorproduct_obj = vendorproduct_obj.order_by('-cost')
+    #if GET request
+    else:
+        #order by top 4 most recently updated items:
+        vendorproduct_obj = vendorproduct_obj.order_by('-update_date')[:4]
 
     #print("Post filter", vendorproduct_obj)
 

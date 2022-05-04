@@ -55,7 +55,7 @@ class VendorSignUpForm(UserCreationForm):
 class RequirementForm(forms.Form): #forms.ModelForm):
     """Form for requirements search."""
     #override cost input to be options
-    ANY = 1
+    ANY = 0
     LTE_50 = 50
     LTE_100 = 100
     LTE_500 = 500
@@ -89,7 +89,14 @@ class RequirementForm(forms.Form): #forms.ModelForm):
     ordering = forms.ChoiceField(choices=ORDERING_CHOICES)
     
     #payment type (mapped from model choices)
-    payment_type = forms.ChoiceField(choices = VendorProduct.PAYMENT_TYPE)
+    #payment_type = forms.ChoiceField(choices = VendorProduct.PAYMENT_TYPE)
+
+    #add ANY field to default payment type search
+    # specified as 0 above
+    PAYMENT_CHOICES = (
+        (ANY, "Any"),
+    ) + VendorProduct.PAYMENT_TYPE
+    payment_type = forms.ChoiceField(choices=PAYMENT_CHOICES)
 
     class Meta:
         model = VendorProduct

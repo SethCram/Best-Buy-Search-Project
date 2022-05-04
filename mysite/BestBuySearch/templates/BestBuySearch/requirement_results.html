@@ -80,7 +80,7 @@
             <!-- requirements listings -->
             {% block listings %}
                 {% if VendorProduct %}
-                    {% for vendorproduct in VendorProduct %}
+                    {% for vendorproduct in page_obj %}
                     
                         <div class="col mb-5">
                             <div class="card h-100">

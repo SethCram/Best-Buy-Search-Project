@@ -105,7 +105,7 @@ class VendorProduct(models.Model):
         (MONTHLY, 'monthly'),
         (ANNUALLY, 'annually'),
     )
-    payment_type = models.PositiveSmallIntegerField( choices=PAYMENT_TYPE, default=IN_FULL)
+    payment_type = models.PositiveSmallIntegerField( choices=PAYMENT_TYPE)
 
     quantity = models.PositiveBigIntegerField(default=1)
 

@@ -26,10 +26,12 @@
                             <p class="lead">{{ vendorproduct.product_description }}</p>
                             <div class="d-flex">
                             {% if user.is_customer %}
-                                <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                                    <!-- My inserted cart -->
-                                    <i class="bi-cart-fill me-1"></i>
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'BestBuySearch:add_to_cart' vendorproduct.PID %}">Add to cart</a></div>
+                                <!-- 
+                                <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" /> 
+                                -->
+                                <!-- My inserted cart -->
+                                <i class="bi-cart-fill me-1"></i>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'BestBuySearch:add_to_cart' vendorproduct.PID %}">Add to cart</a></div>
 
                             {% endif %}
                             </div>

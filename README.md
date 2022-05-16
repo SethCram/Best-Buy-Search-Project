@@ -60,7 +60,7 @@ VendorProduct:
 - VID
 
 ## **Technologies:**
-- Host = None
+- Host = PythonAnywhere
 - Database Server = PHPMyAdmin run with XAMPP
 - IDEs = Spyder, Visual Studio, VSCode
 - Version Control = Git

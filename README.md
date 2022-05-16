@@ -1,18 +1,6 @@
 # BestBuy RDMS: Seth Cram, Chadwick Goodall
 
-
-## **Setup for personal use:**
-1. Install XAMPP and get PHPMyAdmin working
-2. Create a database called "BestBuy_RD"
-3. Setup a virtual environment if on Windows
-4. Download Django and Python
-5. Install all packages specified below
-6. Clone this repo into a folder under your virtual environment
-7. Activate the virtual environment
-8. Run "makemigrations" and "migrate" them 
-9. Then, "runserver"
-10. Navigate to "http://127.0.0.1:8000/BestBuySearch/products/" in your browser
-11. Can run the "createdata" command with an integer argument to create some test data
+Active Website: https://sethcram.pythonanywhere.com/BestBuySearch/login/
 
 ## **How to use:**
 - Upon navigating to the website, you'll be prompted to login to an account
@@ -58,6 +46,19 @@ VendorProduct:
 - publish_date
 - update_date
 - VID
+
+## **Setup for personal use:**
+1. Install XAMPP and get PHPMyAdmin working
+2. Create a database called "BestBuy_RD"
+3. Setup a virtual environment if on Windows
+4. Download Django and Python
+5. Clone this repo into a folder under your virtual environment
+6. Activate the virtual environment
+7. Install all packages specified below by running "pip install -r requirements.txt" and "pip install pillow"
+8. Run "makemigrations" and "migrate" them 
+9. Then, "runserver"
+10. Navigate to "http://127.0.0.1:8000/BestBuySearch/products/" in your browser
+11. Can run the "createdata" command with an integer argument to create some test data
 
 ## **Technologies:**
 - Database Server = PHPMyAdmin run with XAMPP

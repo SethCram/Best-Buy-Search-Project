@@ -107,7 +107,7 @@ class VendorProduct(models.Model):
     )
     payment_type = models.PositiveSmallIntegerField( choices=PAYMENT_TYPE)
 
-    quantity = models.PositiveBigIntegerField(default=1)
+    quantity = models.PositiveBigIntegerField(default=1) #, validators=[MinValueValidator( [('1')])
 
     #description fields:
     product_description = models.CharField(max_length=200, default='product description...')

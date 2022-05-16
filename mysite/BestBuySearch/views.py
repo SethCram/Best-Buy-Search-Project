@@ -457,7 +457,7 @@ class ProductUpdateView( generic.edit.UpdateView ):
 @method_decorator([login_required, vendor_required], name = 'dispatch') #why dispatch?
 class ProductDeleteView( generic.edit.DeleteView ):
     model = VendorProduct
-    template_name = 'BestBuySearch/vendorproduct_delete.html'
+    template_name = 'BestBuySearch/VendorProduct_delete.html'
     success_url = reverse_lazy('BestBuySearch:all_products') #use reverse_lazy bc bc urls not loaded w/ file imported
     
     

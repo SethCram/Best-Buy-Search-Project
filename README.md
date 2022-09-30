@@ -48,23 +48,27 @@ VendorProduct:
 - VID
 
 ## **Setup for personal use:**
-1. Install XAMPP and get PHPMyAdmin working
-2. Create a database called "BestBuy_RD"
-3. Setup a virtual environment if on Windows
-4. Download Django and Python
-5. Clone this repo into a folder under your virtual environment
-6. Activate the virtual environment
-7. Install all packages specified below by running "pip install -r requirements.txt" and "pip install pillow"
-8. Run "makemigrations" and "migrate" them 
-9. Then, "runserver"
-10. Navigate to "http://127.0.0.1:8000/BestBuySearch/products/" in your browser
-11. Can run the "createdata" command with an integer argument to create some test data
+1. Install XAMPP
+2. Get PHPMyAdmin working through running XAMPP MySQL and Apache modules
+3. Create a database called "BestBuy_RDMS" through PHPMyAdmin
+4. Install Python
+5. Setup a virtual environment if on Windows
+6. Clone this repo into a folder under your virtual environment
+7. Activate the virtual environment
+8. Navigate into outermost "mysite" folder
+9. Install all dependencies by running "pip install -r requirements.txt"
+10. Run "python manage.py makemigrations" and "python manage.py migrate" to consolidate and apply DB changes 
+11. To get the SECRET_KEY and DB_PASS, request access from the repo owner
+12. Can run the "python manage.py createdata" command with an integer argument to create some test data
+13. Then, "python manage.py runserver"
+14. Navigate to "http://127.0.0.1:8000/BestBuySearch/products/" in your browser
+15. Refer to above "How to use" section for further instruction
 
 ## **Technologies:**
 - Database Server = PHPMyAdmin run with XAMPP
 - IDEs = Spyder, Visual Studio, VSCode
 - Version Control = Git
-- Packages = mysqlclient, python-decouple, pillow, faker, faker-ecommerce
+- Packages = mysqlclient, python-decouple, pillow, faker, faker-ecommerce, etc.
 - Backend = Django
 - Backend Languages = Python, SQL 
 - Frontend = Bootstrap

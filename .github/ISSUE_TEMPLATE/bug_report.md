@@ -18,8 +18,8 @@ Steps to reproduce the behavior:
 - 
 
 **Desktop (please complete the following information):**
- - OS: Windows
- - Game Version: 0.7.1
+- OS: Windows 10 
+- Browser: Chrome
 
 **Additional context**
 - 

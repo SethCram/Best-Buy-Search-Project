@@ -4,6 +4,8 @@ from faker import Faker
 import faker.providers
 import random
 import faker_commerce
+import requests
+from django.conf import settings
 
 from django.utils import timezone
 
@@ -27,6 +29,33 @@ class Command( BaseCommand ):
     def add_arguments(self, parser):
         """Add an additional arg to run command."""
         parser.add_argument('number_of_products', type=int)
+        
+    def fakeImage(self, fake: Faker, width: int, height: int) -> str:
+        """Fake image through getting one off the internet, 
+        saving it to the images folder in media,
+        and returning the image name.
+
+        Args:
+            fake (Faker): faker instance for genning fake data
+
+        Returns:
+            str: image name beginning with /images/ 
+        """
+        
+        #gen url
+        small_img_url = fake.image_url(width, height)
+        #get img off internet
+        img = requests.get(small_img_url)
+        #construct img name
+        imgName = "/images/" + f"{fake.word()}_fake.png"
+        #construct img path
+        imgPath = settings.MEDIA_ROOT + imgName
+        
+        #save to file in media folder
+        with open(imgPath, "wb") as file:
+            file.write(img.content)
+            
+        return imgName
 
     def handle(self, *args, **kwargs):
         """
@@ -54,7 +83,7 @@ class Command( BaseCommand ):
         #create specified num of prods
         for _ in range(NUM_OF_PRODS):
 
-            name = fake.ecommerce_name() #fake.word()
+            name = fake.ecommerce_name() #+ " (fake)" #fake.word()
             cost = round(random.uniform(0.00, 10000.99), 2) #fake.ecommerce_price() #gens str: fake.pricetag() 
             #debug: print("cost:", cost)
             category = fake.random_int(1, len(VendorProduct.CATEGORY)) #goes up to 20 rn
@@ -62,9 +91,11 @@ class Command( BaseCommand ):
             payment_type = fake.random_int(1, len(VendorProduct.PAYMENT_TYPE)) #goes up to 20 rn
             prod_descr = fake.paragraph(nb_sentences=3)
             brief_descr = fake.text(max_nb_chars=20)
-            #won't actually work to display images
-            small_image = fake.image_url()
-            big_image = fake.image_url()
+            #won't actually work to display images bc looking in media folder
+            
+            #fake imgs
+            small_image = self.fakeImage(fake, width=450, height=300)
+            big_image = self.fakeImage(fake, width=600, height=700)
 
             update_date = timezone.now() #tuple: fake.date_this_decade()
             pub_date = fake.date_this_decade()
@@ -87,7 +118,3 @@ class Command( BaseCommand ):
             #print(cost, category)
         
         print("after faking num of prods: ", VendorProduct.objects.all().count() )
-
-
-
-

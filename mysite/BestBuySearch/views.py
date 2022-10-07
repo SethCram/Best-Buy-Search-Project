@@ -28,7 +28,7 @@ from .decorators import customer_required, vendor_required
 
 # Create your views here.
 
-#cart related views
+#region cart related views
 
 @method_decorator([login_required, customer_required], name = 'dispatch') #why dispatch?
 class RecommendsView(generic.ListView):
@@ -165,8 +165,9 @@ class Cart( generic.ListView ):
         checkoutproducts_list = customer.products.all() #need to call all(), or else not list of iteratable objs
         return checkoutproducts_list
 
+#endregion cart related views
 
-#signup views
+#region signup views
     
 """First ed: 
 class CustomerSignUpView( generic.CreateView ):
@@ -225,7 +226,9 @@ class VendorSignUpView( generic.CreateView ):
         login(self.request, user)
         return redirect('login')
 
-#item views
+#endregion signup views
+
+#region item views
 
 @method_decorator([login_required], name = 'dispatch') #why dispatch?
 class ProductView(generic.ListView):
@@ -247,6 +250,10 @@ class ProductDetailsView(generic.DetailView): #should be DetailView not ListView
     template_name = 'BestBuySearch/product_details.html'
     #usable from html:
     #can't have in details view?: context_object_name = 'recommendedproduct_list'
+   
+#endregion item views
+     
+#region Search Views
      
 @method_decorator([login_required], name = 'dispatch') 
 class ExactResultsView(generic.ListView):
@@ -423,7 +430,9 @@ class ThisVendorsProductsView( generic.ListView ):
             allproducts_list = VendorProduct.objects.all().order_by("-PID")
             return allproducts_list
    
-#form views    
+#endregion Search Views
+   
+#region form views    
    
 @method_decorator([login_required, vendor_required], name = 'dispatch') #why dispatch?
 class ProductCreateView( LoginRequiredMixin, generic.edit.CreateView ):
@@ -459,7 +468,8 @@ class ProductDeleteView( generic.edit.DeleteView ):
     model = VendorProduct
     template_name = 'BestBuySearch/VendorProduct_delete.html'
     success_url = reverse_lazy('BestBuySearch:all_products') #use reverse_lazy bc bc urls not loaded w/ file imported
-    
+ 
+#endregion form views     
     
 #polls views
 

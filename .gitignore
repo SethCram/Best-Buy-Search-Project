@@ -1,9 +1,3 @@
-#ignore virtual envs
-**/.env
-**/venv
-
-**/__pycache__/*
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -49,6 +43,8 @@ coverage.xml
 
 # VirtualEnv
 .venv/
+.env
+venv
 
 # Developers
 *.sw*

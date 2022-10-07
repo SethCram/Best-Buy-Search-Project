@@ -28,7 +28,7 @@
         {% endblock more_styling %}
 
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -110,20 +110,24 @@
             {% endblock section %}
 
         {% endblock inner-body %}
-
+		
         {% block pagination %}
         
         {% endblock pagination %}
-		
-        <!-- Footer-->
-        <footer class="py-5 bg-dark text-white">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; BestBuySearch 2022</p></div>
-            <ul class="list-inline text-center">
-                <li class="list-inline-item"><a>Privacy</a></li>
-                <li class="list-inline-item"><a target="_blank" href="https://www.termsfeed.com/live/0625eac9-112a-4887-a7e6-c2b88100937e">Terms</a></li>
-                <li class="list-inline-item"><a>Support</a></li>
-            </ul>
-        </footer>
+
+
+        {% block footer%}
+            <!-- Footer-->
+            <footer class="py-5 bg-dark">
+                <div class="container"><p class="m-0 text-center text-white">Copyright &copy; BestBuySearch 2022</p></div>
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item"><a>Privacy</a></li>
+                    <li class="list-inline-item"><a target="_blank" href="https://www.termsfeed.com/live/0625eac9-112a-4887-a7e6-c2b88100937e">Terms</a></li>
+                    <li class="list-inline-item"><a>Support</a></li>
+                </ul>
+            </footer>
+        {% endblock footer%}
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->

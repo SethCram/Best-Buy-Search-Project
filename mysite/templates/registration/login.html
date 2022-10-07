@@ -4,22 +4,21 @@
 
 {% block content %}
 <div align="center">
-<h2>Log In</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-dark">Log In</button>
-</form>
+	<h2>Log In</h2>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit" class="btn btn-dark">Log In</button>
+	</form>
+</div>
 
-<div class="container-sm px-4 px-lg-5 my-5 col-6">
-	<div class="text-center text-white ">
-		<ul class="list-group">
-			<li type="button" class="list-group-item  list-group-item-action">
-				<a class="nav-link" href="{% url 'BestBuySearch:customer_signup' %}">Create Customer Account</a></li>
-			<li type="button" class="list-group-item  list-group-item-action">
-				<a class="nav-link" href="{% url 'BestBuySearch:vendor_signup' %}">Create Vendor Account</a></li>
-		</ul>
-	</div>
+
+<div class="container-sm my-5 pt-3">
+	<a class="btn btn-primary" href="{% url 'BestBuySearch:customer_signup' %}">Create Customer Account</a>
 </div>
+<div class="container-sm my-5">
+	<a class="btn btn-primary" href="{% url 'BestBuySearch:vendor_signup' %}">Create Vendor Account</a>
 </div>
+
+
 {% endblock %}

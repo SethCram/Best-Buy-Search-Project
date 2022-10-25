@@ -2,6 +2,8 @@
 
 Active Website: https://sethcram.pythonanywhere.com/BestBuySearch/login/
 
+Paper: https://github.com/SethCram/Best-Buy-Search-Project/files/9863187/CS360_Final_Report.pdf
+
 ## **How to use:**
 - Upon navigating to the website, you'll be prompted to login to an account
 - Choose to create an account as a customer or vendor

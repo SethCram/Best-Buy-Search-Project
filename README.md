@@ -1,8 +1,8 @@
-# BestBuy RDMS: Seth Cram, Chadwick Goodall
+# BestBuy: Seth Cram, Chadwick Goodall
 
-Active Website: https://sethcram.pythonanywhere.com/BestBuySearch/login/
+[See the website](https://sethcram.pythonanywhere.com/BestBuySearch/login/)
 
-Paper: https://github.com/SethCram/Best-Buy-Search-Project/files/9863187/CS360_Final_Report.pdf
+[Read the paper](https://github.com/SethCram/Best-Buy-Search-Project/files/9863187/CS360_Final_Report.pdf)
 
 ## **How to use:**
 - Upon navigating to the website, you'll be prompted to login to an account

@@ -1,8 +1,9 @@
-# BestBuy: Seth Cram, Chadwick Goodall
-
-[See the website](https://sethcram.pythonanywhere.com/BestBuySearch/login/)
+# Generic Ecommerce Website - Best Buy Search
 
 [Read the paper](https://github.com/SethCram/Best-Buy-Search-Project/files/9863187/CS360_Final_Report.pdf)
+
+## See the website
+[![Ecommerce Website](/images/BestBuySearch.PNG 'Best Buy Search')](https://sethcram.pythonanywhere.com/BestBuySearch/login/)
 
 ## **How to use:**
 - Upon navigating to the website, you'll be prompted to login to an account
@@ -49,7 +50,7 @@ VendorProduct:
 - update_date
 - VID
 
-## **Setup for personal use:**
+## **Setup for personal development:**
 1. Install XAMPP
 2. Get PHPMyAdmin working through running XAMPP MySQL and Apache modules
 3. Create a database called "BestBuy_RDMS" through PHPMyAdmin

@@ -1,4 +1,5 @@
-# Generic Ecommerce Website - Best Buy Search
+# Best Buy Search
+Generic Ecommerce website with comprehensive product filtering. The users registered as Vendors can post new products to the website, while users registered as Customers can purchase them. 
 
 [Read the paper](https://github.com/SethCram/Best-Buy-Search-Project/files/9863187/CS360_Final_Report.pdf)
 
